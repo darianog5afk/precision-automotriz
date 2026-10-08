@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="estilos.css">
+
+    <title>Panel Administrativo | PAG</title>
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+
+            <h1>PAG</h1>
+
+            <p>Precision Automotriz Group</p>
+
+        </div>
+
+        <nav>
+
+            <a href="index.html">Inicio</a>
+
+            <a href="seguimiento.html">Seguimiento</a>
+
+        </nav>
+
+    </header>
+
+
+    <section class="admin-page">
+
+        <div class="admin-box">
+
+            <div class="admin-logo">
+                PAG
+            </div>
+
+            <h2>Panel de administración</h2>
+
+            <p class="admin-description">
+                Desde este panel podrás administrar las órdenes
+                y la información de los vehículos del taller.
+            </p>
+
+
+            <div class="admin-menu">
+
+                <button class="admin-button" onclick="mostrarNuevaOrden()">
+                    ➕ Nueva orden
+                </button>
+<button class="admin-button" onclick="mostrarOrdenes()">
+    📋 Ver órdenes
+</button>
+
+<button class="admin-button" onclick="mostrarTurnos()">
+    📅 Ver turnos
+</button>
+</button>
+                <button class="admin-button">
+                    🚗 Vehículos
+                </button>
+<button class="admin-button" onclick="mostrarEditarOrden()">
+    ✏️ Editar orden existente
+</button>
+                <button class="admin-button">
+                    📋 Órdenes de trabajo
+                </button>
+
+                <button class="admin-button">
+                    📸 Fotos
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        <p>PAG — Precision Automotriz Group</p>
+
+        <p>Taller Mecánico Integral</p>
+
+        <p>© 2026 - Todos los derechos reservados</p>
+
+    </footer>
+<script src="admin.js"></script>
+</body>
+
+</html>

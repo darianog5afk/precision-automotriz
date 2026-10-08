@@ -1,0 +1,777 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
+    color: #1a1a1a;
+}
+
+/* ENCABEZADO */
+
+header {
+    background: #111827;
+    color: white;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+.logo p {
+    color: #cbd5e1;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #f59e0b;
+}
+
+/* PORTADA */
+
+.hero {
+    min-height: 650px;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 0, 0, 0.65)
+        ),
+        url("poster-pag.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    color: white;
+
+    padding: 60px 20px;
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.hero h2 {
+    font-size: 52px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 35px;
+    color: #e5e7eb;
+}
+
+/* BOTONES */
+
+.btn {
+    display: inline-block;
+    padding: 15px 28px;
+    margin: 5px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background: #f59e0b;
+    color: #111827;
+}
+
+.btn-primary:hover {
+    background: #d97706;
+}
+
+.btn-secondary {
+    background: white;
+    color: #111827;
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+/* SERVICIOS */
+
+.services {
+    padding: 80px 8%;
+    text-align: center;
+}
+
+.services h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.services-description {
+    color: #64748b;
+    margin-bottom: 45px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.service-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-card h3 {
+    margin: 15px 0 10px;
+}
+
+.service-card p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* SEGUIMIENTO */
+
+.tracking {
+    background: #111827;
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.tracking h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.tracking p {
+    color: #cbd5e1;
+    margin-bottom: 30px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #020617;
+    color: #94a3b8;
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 14px;
+}
+
+/* CELULAR */
+
+@media (max-width: 768px) {
+
+    header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    nav a {
+        margin: 0 7px;
+        font-size: 12px;
+    }
+
+    .hero h2 {
+        font-size: 36px;
+    }
+
+    .hero p {
+        font-size: 17px;
+    }
+}
+/* MARCA PRINCIPAL */
+
+.hero-brand {
+    margin-bottom: 25px;
+}
+
+.hero-brand span {
+    display: block;
+    font-size: 82px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    line-height: 1;
+}
+
+.hero-brand small {
+    display: block;
+    margin-top: 8px;
+    font-size: 15px;
+    letter-spacing: 4px;
+    color: #f59e0b;
+    font-weight: bold;
+}
+
+/* BOTONES DE PORTADA */
+
+.hero-buttons {
+    margin-top: 30px;
+}
+
+/* TEXTO PRINCIPAL */
+
+.hero h2 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 18px;
+}
+
+.hero p {
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+/* PÁGINA DE SEGUIMIENTO */
+
+.tracking-page {
+    min-height: 650px;
+    background: #f4f6f8;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 60px 20px;
+}
+
+.tracking-box {
+    width: 100%;
+    max-width: 550px;
+
+    background: white;
+
+    padding: 50px 40px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+}
+
+.tracking-logo {
+    font-size: 58px;
+    font-weight: 900;
+    letter-spacing: 7px;
+
+    color: #111827;
+
+    margin-bottom: 20px;
+}
+
+.tracking-box h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.tracking-box p {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.tracking-box input {
+    width: 100%;
+
+    padding: 16px;
+
+    border: 2px solid #e2e8f0;
+
+    border-radius: 7px;
+
+    font-size: 16px;
+
+    text-align: center;
+
+    outline: none;
+
+    margin-bottom: 15px;
+}
+
+.tracking-box input:focus {
+    border-color: #f59e0b;
+}
+
+.tracking-box .btn {
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.volver {
+    display: block;
+
+    margin-top: 25px;
+
+    color: #64748b;
+
+    text-decoration: none;
+
+    font-size: 14px;
+}
+
+.volver:hover {
+    color: #f59e0b;
+}
+/* RESULTADO DEL SEGUIMIENTO */
+
+#resultado {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.resultado {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+.resultado h3 {
+    font-size: 22px;
+    color: #111827;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.resultado p {
+    color: #334155;
+    margin: 12px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.resultado p:last-child {
+    border-bottom: none;
+}
+
+.resultado strong {
+    color: #111827;
+}
+
+/* ESTADO DEL VEHÍCULO */
+
+.resultado p:nth-child(4) {
+    color: #15803d;
+    font-weight: bold;
+}
+
+/* ORDEN NO ENCONTRADA */
+
+.resultado.error {
+    text-align: center;
+    border: 1px solid #fecaca;
+    background: #fef2f2;
+}
+
+.resultado.error h3 {
+    color: #b91c1c;
+}
+
+.resultado.error p {
+    color: #991b1b;
+}
+/* ==========================================
+   ESTADO DEL VEHÍCULO
+   ========================================== */
+
+.estado-vehiculo {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-left: 8px;
+    border-radius: 20px;
+    background: #111827 !important;
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    line-height: 1.2;
+}
+/* CABECERA DE LA ORDEN */
+
+.ficha-cabecera {
+    background: #111827;
+    color: white;
+
+    padding: 15px 20px;
+
+    margin: 20px 0 25px;
+
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ficha-cabecera span {
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #cbd5e1;
+    font-weight: bold;
+}
+
+.ficha-cabecera strong {
+    font-size: 20px;
+    color: #f59e0b;
+}
+/* TITULOS DE SECCIONES */
+
+.titulo-seccion {
+
+    margin-top: 25px;
+    margin-bottom: 15px;
+
+    padding-bottom: 8px;
+
+    border-bottom: 2px solid #f59e0b;
+
+    font-size: 18px;
+
+    color: #111827;
+
+    font-weight: 800;
+}
+/* FOTOS DEL VEHÍCULO */
+
+.foto-vehiculo {
+    display: block;
+
+    width: 100%;
+    max-width: 450px;
+
+    height: 280px;
+
+    object-fit: cover;
+
+    margin: 20px auto;
+
+    border-radius: 12px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+}
+/* ==========================================
+   PANEL ADMINISTRATIVO
+   ========================================== */
+
+.admin-page {
+    min-height: 650px;
+    background: #f4f6f8;
+    padding: 60px 20px;
+}
+
+.admin-box {
+    width: 100%;
+    max-width: 850px;
+    margin: auto;
+    background: white;
+    padding: 45px;
+    border-radius: 15px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+}
+
+.admin-logo {
+    font-size: 55px;
+    font-weight: 900;
+    letter-spacing: 7px;
+    color: #111827;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.admin-box h2 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #111827;
+}
+
+.admin-description {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 35px;
+}
+
+#formNuevaOrden {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+#formNuevaOrden input,
+#formNuevaOrden select,
+#formNuevaOrden textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    outline: none;
+}
+
+#formNuevaOrden input:focus,
+#formNuevaOrden select:focus,
+#formNuevaOrden textarea:focus {
+    border-color: #f59e0b;
+}
+
+#formNuevaOrden textarea {
+    resize: vertical;
+}
+
+#formNuevaOrden textarea,
+#formNuevaOrden button {
+    grid-column: 1 / -1;
+}
+
+.admin-button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 7px;
+    background: #111827;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.admin-button:hover {
+    background: #f59e0b;
+    color: #111827;
+}
+
+@media (max-width: 700px) {
+
+    .admin-box {
+        padding: 25px;
+    }
+
+    #formNuevaOrden {
+        grid-template-columns: 1fr;
+    }
+
+}
+/* ==========================================
+   PROGRESO DEL VEHÍCULO
+   ========================================== */
+
+.progreso-vehiculo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    margin: 30px 0;
+    padding: 20px 10px;
+}
+
+.paso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 70px;
+    color: #94a3b8;
+}
+
+.paso span {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.paso small {
+    margin-top: 8px;
+    font-size: 11px;
+    text-align: center;
+}
+
+.paso.activo span {
+    background: #f59e0b;
+    color: #111827;
+}
+
+.paso.activo small {
+    color: #111827;
+    font-weight: bold;
+}
+
+.linea {
+    width: 45px;
+    height: 3px;
+    background: #e2e8f0;
+    margin-top: 18px;
+}
+
+.paso.activo + .linea {
+    background: #f59e0b;
+}
+
+@media (max-width: 600px) {
+
+    .progreso-vehiculo {
+        gap: 2px;
+    }
+
+    .linea {
+        width: 15px;
+    }
+
+    .paso {
+        min-width: 50px;
+    }
+
+    .paso span {
+        width: 32px;
+        height: 32px;
+    }
+
+    .paso small {
+        font-size: 9px;
+    }
+}
+/* ==========================================
+   LISTADO DE ÓRDENES
+   ========================================== */
+
+.orden-admin {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.orden-admin h3 {
+    margin-top: 0;
+    color: #111827;
+    font-size: 20px;
+}
+
+.orden-admin p {
+    margin: 8px 0;
+    color: #475569;
+}
+
+.orden-admin strong {
+    color: #111827;
+}
+
+.orden-admin .admin-button {
+    margin-top: 12px;
+}
+/* ==========================================
+   ESTADOS DE LAS ÓRDENES
+   ========================================== */
+
+.estado-orden {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+.estado-recepcion {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.estado-diagnostico {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.estado-reparacion {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+.estado-repuestos {
+    background: #ffedd5;
+    color: #9a3412;
+}
+
+.estado-listo {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.estado-entregado {
+    background: #e5e7eb;
+    color: #374151;
+}
+/* ==========================================
+   ESTADOS DE LOS TURNOS
+   ========================================== */
+
+.estado-turno {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.estado-pendiente {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.estado-confirmado {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.estado-cancelado {
+    background: #fee2e2;
+    color: #991b1b;
+}
+.estado-atendido {
+    background: #dbeafe;
+    color: #1e40af;
+}

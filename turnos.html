@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="estilos.css">
+
+    <title>Solicitar turno - Precision Automotriz Group</title>
+
+</head>
+
+<body>
+
+    <section class="tracking">
+
+        <h2>📅 Solicitar turno</h2>
+
+        <p>
+            Completá tus datos y el motivo de la consulta.
+            Nos pondremos en contacto para confirmar el turno.
+        </p>
+
+        <div class="orden-admin">
+
+            <label>Nombre y apellido</label>
+
+            <input
+                type="text"
+                id="cliente"
+                placeholder="Ej: Juan Pérez"
+            >
+
+            <label>Teléfono</label>
+
+            <input
+                type="text"
+                id="telefono"
+                placeholder="Ej: 11 1234-5678"
+            >
+
+            <label>Vehículo</label>
+
+            <input
+                type="text"
+                id="vehiculo"
+                placeholder="Ej: Volkswagen Virtus"
+            >
+
+            <label>Patente</label>
+
+            <input
+                type="text"
+                id="patente"
+                placeholder="Ej: AB 123 CD"
+            >
+
+            <label>Fecha preferida</label>
+
+            <input
+                type="date"
+                id="fecha"
+            >
+
+            <label>Horario preferido</label>
+
+            <input
+                type="time"
+                id="hora"
+            >
+<label>Tipo de servicio</label>
+
+<select id="tipoServicio">
+
+    <option value="">
+        Seleccioná un servicio
+    </option>
+
+    <option value="Mantenimiento general">
+        🔧 Mantenimiento general
+    </option>
+
+    <option value="Frenos y suspensión">
+        🚗 Frenos y suspensión
+    </option>
+
+    <option value="Embrague y transmisión">
+        ⚙️ Embrague y transmisión
+    </option>
+
+    <option value="Electricidad">
+        🔌 Electricidad
+    </option>
+
+    <option value="Diagnóstico">
+        🔍 Diagnóstico
+    </option>
+
+    <option value="Distribución">
+        🛠️ Distribución
+    </option>
+
+    <option value="Otro">
+        📋 Otro
+    </option>
+
+</select>
+
+<label>Motivo de la consulta</label>
+
+<textarea
+    id="motivo"
+    placeholder="Ej: Cambio de aceite, revisión, frenos..."
+></textarea>
+            <label>Motivo de la consulta</label>
+
+            <textarea
+                id="motivo"
+                placeholder="Ej: Cambio de aceite, revisión, frenos..."
+            ></textarea>
+
+            <button
+                class="admin-button"
+                onclick="solicitarTurno()"
+            >
+                📅 Solicitar turno
+            </button>
+
+        </div>
+
+        <a
+            href="index.html"
+            class="btn btn-primary"
+        >
+            ← Volver al inicio
+        </a>
+
+    </section>
+
+    <script>
+
+        function solicitarTurno() {
+
+            const cliente =
+                document.getElementById("cliente").value.trim();
+
+            const telefono =
+                document.getElementById("telefono").value.trim();
+
+            const vehiculo =
+                document.getElementById("vehiculo").value.trim();
+
+            const patente =
+                document.getElementById("patente").value.trim();
+
+            const fecha =
+                document.getElementById("fecha").value;
+
+            const hora =
+                document.getElementById("hora").value;
+
+            const motivo =
+                document.getElementById("motivo").value.trim();
+const tipoServicio =
+    document.getElementById("tipoServicio").value;
+
+            if (
+                cliente === "" ||
+                telefono === "" ||
+                vehiculo === "" ||
+                patente === "" ||
+                fecha === "" ||
+                hora === "" ||
+               motivo === "" ||
+
+tipoServicio === ""
+            ) {
+
+                alert("Por favor completá todos los campos.");
+
+                return;
+            }
+
+
+            const turnos =
+                JSON.parse(
+                    localStorage.getItem("turnosPAG")
+                ) || [];
+
+
+            const nuevoTurno = {
+
+                id: Date.now(),
+
+                cliente: cliente,
+
+                telefono: telefono,
+
+                vehiculo: vehiculo,
+
+                patente: patente,
+
+                fecha: fecha,
+
+                hora: hora,
+
+                motivo: motivo,
+                tipoServicio: tipoServicio,
+
+                estado: "Pendiente"
+
+            };
+
+
+            turnos.push(nuevoTurno);
+
+
+            localStorage.setItem(
+                "turnosPAG",
+                JSON.stringify(turnos)
+            );
+
+
+            alert(
+                "✅ Solicitud enviada correctamente. El taller deberá confirmar el turno."
+            );
+
+
+            document.getElementById("cliente").value = "";
+            document.getElementById("telefono").value = "";
+            document.getElementById("vehiculo").value = "";
+            document.getElementById("patente").value = "";
+            document.getElementById("fecha").value = "";
+            document.getElementById("hora").value = "";
+            document.getElementById("motivo").value = "";
+            document.getElementById("tipoServicio").value = "";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

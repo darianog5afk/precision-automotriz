@@ -1,153 +1,159 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <link rel="icon" href="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f527.png" type="image/png">
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111827">
+    <meta name="description" content="Precision Automotriz Group. Taller mecánico integral para autos, utilitarios y vehículos de trabajo. Solicitá tu turno y consultá el seguimiento de tu vehículo.">
 
+    <link rel="icon" href="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f527.png" type="image/png">
     <link rel="stylesheet" href="estilos.css">
 
-    <title>Precision Automotriz Group</title>
+    <title>Precision Automotriz Group | Taller Mecánico Integral</title>
 </head>
 
 <body>
 
     <header>
-
         <div class="logo">
             <h1>PAG</h1>
             <p>Precision Automotriz Group</p>
         </div>
 
-        <nav>
+        <nav aria-label="Navegación principal">
             <a href="#inicio">Inicio</a>
             <a href="#servicios">Servicios</a>
-            <a href="seguimiento">Seguimiento</a>
+            <a href="seguimiento.html">Seguimiento</a>
+            <a href="turnos.html">Solicitar turno</a>
             <a href="#contacto">Contacto</a>
         </nav>
-
     </header>
 
+    <main>
 
-    <section class="hero" id="inicio">
+        <section class="hero" id="inicio">
+            <div class="hero-content">
 
-        <div class="hero-content">
+                <div class="hero-brand">
+                    <span>PAG</span>
+                    <small>PRECISION AUTOMOTRIZ GROUP</small>
+                </div>
 
-    <div class="hero-brand">
-        <span>PAG</span>
-        <small>PRECISION AUTOMOTRIZ GROUP</small>
-    </div>
+                <h2>Mecánica automotriz profesional</h2>
 
-    <h2>Mecánica automotriz profesional</h2>
+                <p>
+                    Servicio integral para autos, utilitarios y vehículos de trabajo.
+                    Diagnóstico, reparación y mantenimiento.
+                </p>
 
-    <p>
-        Servicio integral para autos, utilitarios y vehículos de trabajo.
-        Diagnóstico, reparación y mantenimiento.
-    </p>
+                <div class="hero-buttons">
+                    <a href="seguimiento.html" class="btn btn-primary">
+                        🚗 Seguimiento de mi vehículo
+                    </a>
 
-    <div class="hero-buttons">
+                    <a href="#servicios" class="btn btn-secondary">
+                        🔧 Ver nuestros servicios
+                    </a>
+                </div>
 
-    <a href="./seguimiento.html" class="btn btn-primary">
-        Seguimiento de mi vehículo
-    </a>
-
-    <a href="#servicios" class="btn btn-secondary">
-        Ver nuestros servicios
-    </a>
-
-</div>
-
-</div>
-
-    </section>
-
-
-    <section class="services" id="servicios">
-
-        <h2>Nuestros servicios</h2>
-
-        <p class="services-description">
-            Soluciones profesionales para el mantenimiento y reparación de tu vehículo.
-        </p>
-
-        <div class="services-grid">
-
-            <div class="service-card">
-                <h3>🔧 Mecánica general</h3>
-                <p>Reparaciones y mantenimiento integral.</p>
             </div>
+        </section>
 
-            <div class="service-card">
-                <h3>💻 Diagnóstico</h3>
-                <p>Escaneo y diagnóstico computarizado.</p>
+        <section class="services" id="servicios">
+            <h2>Nuestros servicios</h2>
+
+            <p class="services-description">
+                Soluciones profesionales para el mantenimiento y la reparación de tu vehículo.
+            </p>
+
+            <div class="services-grid">
+
+                <div class="service-card">
+                    <h3>🔧 Mecánica general</h3>
+                    <p>Reparaciones y mantenimiento integral.</p>
+                </div>
+
+                <div class="service-card">
+                    <h3>💻 Diagnóstico</h3>
+                    <p>Escaneo y diagnóstico computarizado.</p>
+                </div>
+
+                <div class="service-card">
+                    <h3>🚗 Frenos y suspensión</h3>
+                    <p>Revisión y reparación del sistema.</p>
+                </div>
+
+                <div class="service-card">
+                    <h3>⚙️ Embrague y transmisión</h3>
+                    <p>Reparación y mantenimiento.</p>
+                </div>
+
+                <div class="service-card">
+                    <h3>🔌 Electricidad</h3>
+                    <p>Diagnóstico y reparación eléctrica.</p>
+                </div>
+
+                <div class="service-card">
+                    <h3>🛠️ Distribución</h3>
+                    <p>Reemplazo y mantenimiento del sistema.</p>
+                </div>
+
             </div>
+        </section>
 
-            <div class="service-card">
-                <h3>🚗 Frenos y suspensión</h3>
-                <p>Revisión y reparación del sistema.</p>
-            </div>
+        <section class="tracking" id="turnos">
+            <h2>📅 Solicitá tu turno</h2>
 
-            <div class="service-card">
-                <h3>⚙️ Embrague y transmisión</h3>
-                <p>Reparación y mantenimiento.</p>
-            </div>
+            <p>
+                Elegí la fecha y el horario que preferís.
+                El taller deberá confirmar tu solicitud.
+            </p>
 
-            <div class="service-card">
-                <h3>🔌 Electricidad</h3>
-                <p>Diagnóstico y reparación eléctrica.</p>
-            </div>
+            <a href="turnos.html" class="btn btn-primary">
+                📅 Solicitar turno
+            </a>
+        </section>
 
-            <div class="service-card">
-                <h3>🛠️ Distribución</h3>
-                <p>Reemplazo y mantenimiento del sistema.</p>
-            </div>
+        <section class="tracking" id="seguimiento">
+            <h2>🚗 Seguimiento de tu vehículo</h2>
 
-        </div>
+            <p>
+                Consultá el estado de tu vehículo utilizando
+                el código de tu orden de trabajo.
+            </p>
 
-    </section>
+            <a href="seguimiento.html" class="btn btn-primary">
+                🔎 Consultar mi vehículo
+            </a>
+        </section>
 
-<section class="tracking" id="turnos">
+        <section class="tracking" id="contacto">
+            <h2>📞 Contacto</h2>
 
-    <h2>📅 Solicitá tu turno</h2>
+            <p>
+                ¿Tenés alguna consulta sobre tu vehículo o necesitás un turno?
+                Comunicate con Precision Automotriz Group.
+            </p>
 
-    <p>
-        Reservá tu turno en Precision Automotriz Group
-        de manera rápida y sencilla.
-    </p>
+            <a
+                href="https://wa.me/5491140915051"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener noreferrer">
+                Escribir por WhatsApp
+            </a>
+        </section>
 
-    <a href="turnos.html" class="btn btn-primary">
-        📅 Solicitar turno
-    </a>
+    </main>
 
-</section>
-    <section class="tracking" id="seguimiento">
-
-        <h2>🚗 Seguimiento de tu vehículo</h2>
-
-        <p>
-            Próximamente podrás consultar online el estado de tu vehículo
-            utilizando el código de tu orden de trabajo.
-        </p>
-
-        <a href="#" class="btn btn-primary">
-            Consultar mi vehículo
-        </a>
-
-    </section>
-
-
-    <footer id="contacto">
-
-        <p>PRECISION AUTOMOTRIZ GROUP</p>
-
+    <footer>
+        <p><strong>PAG — PRECISION AUTOMOTRIZ GROUP</strong></p>
         <p>Taller Mecánico Integral</p>
-
         <p>© 2026 - Todos los derechos reservados</p>
-
     </footer>
 
 </body>
-
 </html>
+```

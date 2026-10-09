@@ -1,19 +1,15 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="estilos.css">
-
     <title>Seguimiento | PAG</title>
 </head>
 
 <body>
-
     <header>
-
         <div class="logo">
             <h1>PAG</h1>
             <p>Precision Automotriz Group</p>
@@ -25,85 +21,62 @@
             <a href="seguimiento.html">Seguimiento</a>
             <a href="index.html#contacto">Contacto</a>
         </nav>
-
     </header>
 
-
     <section class="tracking-page">
-
         <div class="tracking-box">
-
-            <div class="tracking-logo">
-                PAG
-            </div>
+            <div class="tracking-logo">PAG</div>
 
             <h2>Seguimiento de tu vehículo</h2>
 
             <p>
-                Ingresá el código de tu orden de trabajo
-                para consultar el estado de tu vehículo.
+                Ingresá el código de tu orden de trabajo o de tu solicitud
+                de turno para consultar su estado.
             </p>
 
-            <input
-                type="text"
-                id="codigoOrden"
-                placeholder="Ejemplo: PAG-00125"
-            >
+            <form id="formularioSeguimiento">
+                <input
+                    type="text"
+                    id="codigoOrden"
+                    placeholder="Ej.: PAG-00125 o PAG-T-0004"
+                    autocomplete="off"
+                    required
+                >
 
-            <button class="btn btn-primary">
-                Consultar vehículo
-            </button>
+                <button type="submit" class="btn btn-primary" id="botonConsulta">
+                    Consultar
+                </button>
+            </form>
+
+            <div id="resultadoSeguimiento" aria-live="polite"></div>
             <p id="prueba-script"></p>
 
-            <a href="index.html" class="volver">
-                ← Volver al inicio
-            </a>
-
+            <a href="index.html" class="volver">← Volver al inicio</a>
         </div>
-
     </section>
 
-
     <footer>
-
         <p>PAG — Precision Automotriz Group</p>
-
         <p>Taller Mecánico Integral</p>
-
         <p>© 2026 - Todos los derechos reservados</p>
-
     </footer>
+
+    <script src="./script.js"></script>
+
     <script>
-    const parametros = new URLSearchParams(window.location.search);
-    const ordenDesdeURL = parametros.get("orden");
+        const parametros = new URLSearchParams(window.location.search);
+        const codigoURL = parametros.get("orden");
 
-    if (ordenDesdeURL) {
-        const campoOrden = document.getElementById("codigoOrden");
+        if (codigoURL) {
+            const campo = document.getElementById("codigoOrden");
 
-        if (campoOrden) {
-            campoOrden.value = ordenDesdeURL;
-            boton.click();
+            if (campo) {
+                campo.value = codigoURL;
+                document.getElementById("formularioSeguimiento")
+                    .requestSubmit();
+            }
         }
-    }
-</script>
-
-<script src="./script.js"></script>
-<script>
-    const parametrosURL = new URLSearchParams(window.location.search);
-    const ordenURL = parametrosURL.get("orden");
-
-    if (ordenURL) {
-
-        const campo = document.getElementById("codigoOrden");
-        const botonConsulta = document.querySelector(".tracking-box .btn-primary");
-
-        if (campo && botonConsulta) {
-            campo.value = ordenURL;
-            botonConsulta.click();
-        }
-
-    }
-</script>
-
+    </script>
 </body>
 </html>
+```

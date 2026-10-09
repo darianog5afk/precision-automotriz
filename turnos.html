@@ -4,190 +4,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111827">
+
+    <title>Solicitar turno | Precision Automotriz Group</title>
     <link rel="stylesheet" href="estilos.css">
-    <title>Solicitar turno - Precision Automotriz Group</title>
 </head>
 
 <body>
-    <section class="tracking">
-        <h2>📅 Solicitar turno</h2>
+    <header>
+        <div class="logo">
+            <h1>PAG</h1>
+            <p>Precision Automotriz Group</p>
+        </div>
 
-        <p>
-            Completá tus datos y el motivo de la consulta.
-            Nos pondremos en contacto para confirmar el turno.
-        </p>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="seguimiento.html">Seguimiento</a>
+        </nav>
+    </header>
 
-        <form id="formularioTurno" class="orden-admin">
-            <label for="cliente">Nombre y apellido</label>
-            <input type="text" id="cliente" placeholder="Ej: Juan Pérez" required>
+    <main>
+        <section class="tracking">
+            <h2>📅 Solicitar turno</h2>
 
-            <label for="telefono">Teléfono</label>
-            <input type="tel" id="telefono" placeholder="Ej: 11 1234-5678" required>
+            <p>
+                Completá tus datos y el motivo de la consulta.
+                El taller deberá confirmar el turno.
+            </p>
 
-            <label for="vehiculo">Vehículo</label>
-            <input type="text" id="vehiculo" placeholder="Ej: Volkswagen Virtus" required>
+            <form id="formularioTurno" class="orden-admin">
+                <label for="cliente">Nombre y apellido</label>
+                <input type="text" id="cliente" maxlength="120"
+                    autocomplete="name" placeholder="Ej.: Juan Pérez" required>
 
-            <label for="patente">Patente</label>
-            <input type="text" id="patente" placeholder="Ej: AB 123 CD" required>
+                <label for="telefono">Teléfono</label>
+                <input type="tel" id="telefono" maxlength="30"
+                    autocomplete="tel" placeholder="Ej.: 11 1234-5678" required>
 
-            <label for="fecha">Fecha preferida</label>
-            <input type="date" id="fecha" required>
+                <label for="vehiculo">Vehículo</label>
+                <input type="text" id="vehiculo" maxlength="120"
+                    placeholder="Ej.: Volkswagen Virtus" required>
 
-            <label for="hora">Horario preferido</label>
-            <input type="time" id="hora" required>
+                <label for="patente">Patente</label>
+                <input type="text" id="patente" maxlength="20"
+                    placeholder="Ej.: AB 123 CD" required>
 
-            <label for="tipoServicio">Tipo de servicio</label>
-            <select id="tipoServicio" required>
-                <option value="">Seleccioná un servicio</option>
-                <option value="Mantenimiento general">🔧 Mantenimiento general</option>
-                <option value="Frenos y suspensión">🚗 Frenos y suspensión</option>
-                <option value="Embrague y transmisión">⚙️ Embrague y transmisión</option>
-                <option value="Electricidad">🔌 Electricidad</option>
-                <option value="Diagnóstico">🔍 Diagnóstico</option>
-                <option value="Distribución">🛠️ Distribución</option>
-                <option value="Otro">📋 Otro</option>
-            </select>
+                <label for="fecha">Fecha preferida</label>
+                <input type="date" id="fecha" required>
 
-            <label for="motivo">Motivo de la consulta</label>
-            <textarea id="motivo" placeholder="Ej: Cambio de aceite, revisión, frenos..." required></textarea>
+                <label for="hora">Horario preferido</label>
+                <input type="time" id="hora" required>
 
-            <button class="admin-button" id="botonSolicitar" type="submit">
-                📅 Solicitar turno
-            </button>
+                <label for="tipoServicio">Tipo de servicio</label>
+                <select id="tipoServicio" required>
+                    <option value="">Seleccioná un servicio</option>
+                    <option value="Mantenimiento general">🔧 Mantenimiento general</option>
+                    <option value="Frenos y suspensión">🚗 Frenos y suspensión</option>
+                    <option value="Embrague y transmisión">⚙️ Embrague y transmisión</option>
+                    <option value="Electricidad">🔌 Electricidad</option>
+                    <option value="Diagnóstico">🔍 Diagnóstico</option>
+                    <option value="Distribución">🛠️ Distribución</option>
+                    <option value="Otro">📋 Otro</option>
+                </select>
 
-            <p id="resultadoTurno" role="status" aria-live="polite"></p>
-        </form>
+                <label for="motivo">Motivo de la consulta</label>
+                <textarea id="motivo" maxlength="1000"
+                    placeholder="Ej.: cambio de aceite, revisión, frenos..."
+                    rows="4" required></textarea>
 
-        <a href="index.html" class="btn btn-primary">← Volver al inicio</a>
-    </section>
+                <button class="admin-button" id="botonSolicitar" type="submit">
+                    📅 Solicitar turno
+                </button>
+
+                <div id="resultadoTurno" role="status" aria-live="polite"></div>
+            </form>
+
+            <a href="index.html" class="btn btn-primary">← Volver al inicio</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>PAG — Precision Automotriz Group</p>
+        <p>Taller Mecánico Integral</p>
+        <p>© 2026 - Todos los derechos reservados</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
-    const SUPABASE_URL = "https://wzekdvkwdivzuujnvcnj.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_5y6uaC69wKM0WlNYRSfPyQ_RpeCSKJh";
+    (() => {
+        "use strict";
 
-    const supabaseClient = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+        const SUPABASE_URL = "https://wzekdvkwdivzuujnvcnj.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_5y6uaC69wKM0WlNYRSfPyQ_RpeCSKJh";
+        const WHATSAPP_NUMERO = "5491140915051";
 
-    const formulario = document.getElementById("formularioTurno");
-    const botonSolicitar = document.getElementById("botonSolicitar");
-    const resultado = document.getElementById("resultadoTurno");
+        const formulario = document.getElementById("formularioTurno");
+        const boton = document.getElementById("botonSolicitar");
+        const resultado = document.getElementById("resultadoTurno");
 
-    formulario.addEventListener("submit", solicitarTurno);
-
-    async function solicitarTurno(evento) {
-        evento.preventDefault();
-
-        const cliente = document.getElementById("cliente").value.trim();
-        const telefono = document.getElementById("telefono").value.trim();
-        const vehiculo = document.getElementById("vehiculo").value.trim();
-        const patente = document.getElementById("patente").value.trim();
-        const fecha = document.getElementById("fecha").value;
-        const hora = document.getElementById("hora").value;
-        const motivo = document.getElementById("motivo").value.trim();
-        const tipoServicio = document.getElementById("tipoServicio").value;
-
-        if (!cliente || !telefono || !vehiculo || !patente ||
-            !fecha || !hora || !motivo || !tipoServicio) {
-            resultado.textContent = "Completá todos los campos antes de continuar.";
+        if (!window.supabase || !window.supabase.createClient) {
+            boton.disabled = true;
+            resultado.textContent =
+                "No se pudo cargar el sistema de turnos. Recargá la página e intentá nuevamente.";
             return;
         }
 
-        // Abrimos una pestaña durante el clic para reducir el riesgo
-        // de que el navegador bloquee la apertura de WhatsApp.
-        const pestanaWhatsApp = window.open("about:blank", "_blank");
+        const supabaseClient = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
 
-        botonSolicitar.disabled = true;
-        botonSolicitar.textContent = "Guardando solicitud...";
-        resultado.textContent = "Estamos registrando tu solicitud. Esperá un momento.";
+        // Evitamos solicitar fechas anteriores al día actual.
+        const hoy = new Date();
+        const fechaLocal = [
+            hoy.getFullYear(),
+            String(hoy.getMonth() + 1).padStart(2, "0"),
+            String(hoy.getDate()).padStart(2, "0")
+        ].join("-");
 
-        try {
-            const { data: codigo, error } = await supabaseClient.rpc(
-                "solicitar_turno",
-                {
-                    p_nombre: cliente,
-                    p_telefono: telefono,
-                    p_vehiculo: vehiculo,
-                    p_patente: patente,
-                    p_fecha: fecha,
-                    p_hora: hora,
-                    p_servicio: tipoServicio,
-                    p_motivo: motivo
-                }
-            );
+        document.getElementById("fecha").min = fechaLocal;
 
-            if (error) {
-                console.error("Error de Supabase:", error);
+        formulario.addEventListener("submit", async (evento) => {
+            evento.preventDefault();
 
-                if (pestanaWhatsApp) {
-                    pestanaWhatsApp.close();
-                }
+            if (!formulario.reportValidity()) return;
 
-                resultado.textContent =
-                    "No se pudo guardar la solicitud. Intentá nuevamente o comunicate con el taller.";
+            const cliente = document.getElementById("cliente").value.trim();
+            const telefono = document.getElementById("telefono").value.trim();
+            const vehiculo = document.getElementById("vehiculo").value.trim();
+            const patente = document.getElementById("patente").value.trim().toUpperCase();
+            const fecha = document.getElementById("fecha").value;
+            const hora = document.getElementById("hora").value;
+            const servicio = document.getElementById("tipoServicio").value;
+            const motivo = document.getElementById("motivo").value.trim();
+
+            if (fecha < fechaLocal) {
+                resultado.textContent = "Elegí una fecha igual o posterior a hoy.";
                 return;
             }
 
-            if (!codigo || typeof codigo !== "string") {
-                if (pestanaWhatsApp) {
-                    pestanaWhatsApp.close();
+            boton.disabled = true;
+            boton.textContent = "Guardando solicitud...";
+            resultado.textContent = "Estamos registrando tu solicitud. Esperá un momento.";
+
+            try {
+                const { data: codigo, error } = await supabaseClient.rpc(
+                    "solicitar_turno",
+                    {
+                        p_nombre: cliente,
+                        p_telefono: telefono,
+                        p_vehiculo: vehiculo,
+                        p_patente: patente,
+                        p_fecha: fecha,
+                        p_hora: hora,
+                        p_servicio: servicio,
+                        p_motivo: motivo
+                    }
+                );
+
+                if (error) {
+                    console.error("Error de Supabase:", error);
+                    resultado.textContent =
+                        "No se pudo guardar la solicitud. Intentá nuevamente o comunicate con el taller.";
+                    return;
                 }
 
+                if (typeof codigo !== "string" || !codigo.trim()) {
+                    console.error("Supabase no devolvió un código válido.");
+                    resultado.textContent =
+                        "No pudimos confirmar el código de la solicitud. Contactá al taller antes de volver a enviarla.";
+                    return;
+                }
+
+                resultado.innerHTML = "";
+
+                const confirmacion = document.createElement("div");
+                confirmacion.className = "orden-admin";
+
+                const titulo = document.createElement("h3");
+                titulo.textContent = "✅ Solicitud registrada correctamente";
+
+                const textoCodigo = document.createElement("p");
+                textoCodigo.textContent = "Tu código de solicitud es:";
+
+                const codigoVisible = document.createElement("strong");
+                codigoVisible.textContent = codigo;
+                codigoVisible.style.fontSize = "1.4rem";
+
+                const aviso = document.createElement("p");
+                aviso.textContent =
+                    "El turno todavía debe ser confirmado por el taller. Guardá este código.";
+
+                const botonWhatsApp = document.createElement("button");
+                botonWhatsApp.type = "button";
+                botonWhatsApp.className = "admin-button";
+                botonWhatsApp.textContent = "📲 Enviar solicitud por WhatsApp";
+
+                const mensaje =
+                    "Hola, Precision Automotriz Group.\n\n" +
+                    "Solicito un turno para mi vehículo.\n\n" +
+                    "Código de solicitud: " + codigo + "\n" +
+                    "Cliente: " + cliente + "\n" +
+                    "Teléfono: " + telefono + "\n" +
+                    "Vehículo: " + vehiculo + "\n" +
+                    "Patente: " + patente + "\n" +
+                    "Fecha solicitada: " + fecha + "\n" +
+                    "Horario solicitado: " + hora + "\n" +
+                    "Servicio: " + servicio + "\n" +
+                    "Motivo: " + motivo + "\n\n" +
+                    "Quedo a la espera de la confirmación del taller.";
+
+                botonWhatsApp.addEventListener("click", () => {
+                    const url = "https://wa.me/" + WHATSAPP_NUMERO +
+                        "?text=" + encodeURIComponent(mensaje);
+
+                    window.open(url, "_blank", "noopener,noreferrer");
+                });
+
+                confirmacion.append(titulo, textoCodigo, codigoVisible, aviso, botonWhatsApp);
+                resultado.appendChild(confirmacion);
+
+                // Se bloquea el formulario para evitar que se envíe
+                // dos veces la misma solicitud accidentalmente.
+                formulario.querySelectorAll("input, select, textarea").forEach(campo => {
+                    campo.disabled = true;
+                });
+
+                boton.textContent = "Solicitud registrada";
+
+            } catch (error) {
+                console.error("Error inesperado al solicitar turno:", error);
                 resultado.textContent =
-                    "La solicitud no devolvió un código. Contactá al taller antes de volver a enviarla.";
-                return;
+                    "Ocurrió un error al procesar la solicitud. Revisá tu conexión antes de volver a intentarlo.";
+            } finally {
+                if (!formulario.querySelector("#resultadoTurno .orden-admin")) {
+                    boton.disabled = false;
+                    boton.textContent = "📅 Solicitar turno";
+                }
             }
-
-            const mensaje =
-                "Hola, Precision Automotriz Group.\n\n" +
-                "Solicito un turno para mi vehículo.\n\n" +
-                "Código de solicitud: " + codigo + "\n" +
-                "Cliente: " + cliente + "\n" +
-                "Teléfono: " + telefono + "\n" +
-                "Vehículo: " + vehiculo + "\n" +
-                "Patente: " + patente + "\n" +
-                "Fecha solicitada: " + fecha + "\n" +
-                "Horario solicitado: " + hora + "\n" +
-                "Servicio: " + tipoServicio + "\n" +
-                "Motivo: " + motivo + "\n\n" +
-                "Quedo a la espera de la confirmación del taller.";
-
-            const enlaceWhatsApp =
-                "https://wa.me/5491140915051?text=" +
-                encodeURIComponent(mensaje);
-
-            resultado.textContent =
-                "✅ ¡Solicitud guardada correctamente! Tu código es " +
-                codigo +
-                ". Se abrirá WhatsApp con el mensaje preparado. Recordá pulsar Enviar.";
-
-            // El código se conserva visible en la página aunque WhatsApp
-            // no pueda abrirse.
-            if (pestanaWhatsApp) {
-                pestanaWhatsApp.location.href = enlaceWhatsApp;
-            } else {
-                window.location.href = enlaceWhatsApp;
-            }
-
-            formulario.reset();
-
-        } catch (error) {
-            console.error("Error inesperado:", error);
-
-            if (pestanaWhatsApp) {
-                pestanaWhatsApp.close();
-            }
-
-            resultado.textContent =
-                "Ocurrió un error al procesar la solicitud. Revisá tu conexión antes de volver a intentarlo.";
-        } finally {
-            botonSolicitar.disabled = false;
-            botonSolicitar.textContent = "📅 Solicitar turno";
-        }
-    }
+        });
+    })();
     </script>
 </body>
 </html>

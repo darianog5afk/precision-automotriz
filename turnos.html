@@ -1,22 +1,15 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="estilos.css">
-
     <title>Solicitar turno - Precision Automotriz Group</title>
-
 </head>
 
 <body>
-
     <section class="tracking">
-
         <h2>📅 Solicitar turno</h2>
 
         <p>
@@ -24,215 +17,178 @@
             Nos pondremos en contacto para confirmar el turno.
         </p>
 
-        <div class="orden-admin">
+        <form id="formularioTurno" class="orden-admin">
+            <label for="cliente">Nombre y apellido</label>
+            <input type="text" id="cliente" placeholder="Ej: Juan Pérez" required>
 
-            <label>Nombre y apellido</label>
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" placeholder="Ej: 11 1234-5678" required>
 
-            <input
-                type="text"
-                id="cliente"
-                placeholder="Ej: Juan Pérez"
-            >
+            <label for="vehiculo">Vehículo</label>
+            <input type="text" id="vehiculo" placeholder="Ej: Volkswagen Virtus" required>
 
-            <label>Teléfono</label>
+            <label for="patente">Patente</label>
+            <input type="text" id="patente" placeholder="Ej: AB 123 CD" required>
 
-            <input
-                type="text"
-                id="telefono"
-                placeholder="Ej: 11 1234-5678"
-            >
+            <label for="fecha">Fecha preferida</label>
+            <input type="date" id="fecha" required>
 
-            <label>Vehículo</label>
+            <label for="hora">Horario preferido</label>
+            <input type="time" id="hora" required>
 
-            <input
-                type="text"
-                id="vehiculo"
-                placeholder="Ej: Volkswagen Virtus"
-            >
+            <label for="tipoServicio">Tipo de servicio</label>
+            <select id="tipoServicio" required>
+                <option value="">Seleccioná un servicio</option>
+                <option value="Mantenimiento general">🔧 Mantenimiento general</option>
+                <option value="Frenos y suspensión">🚗 Frenos y suspensión</option>
+                <option value="Embrague y transmisión">⚙️ Embrague y transmisión</option>
+                <option value="Electricidad">🔌 Electricidad</option>
+                <option value="Diagnóstico">🔍 Diagnóstico</option>
+                <option value="Distribución">🛠️ Distribución</option>
+                <option value="Otro">📋 Otro</option>
+            </select>
 
-            <label>Patente</label>
+            <label for="motivo">Motivo de la consulta</label>
+            <textarea id="motivo" placeholder="Ej: Cambio de aceite, revisión, frenos..." required></textarea>
 
-            <input
-                type="text"
-                id="patente"
-                placeholder="Ej: AB 123 CD"
-            >
-
-            <label>Fecha preferida</label>
-
-            <input
-                type="date"
-                id="fecha"
-            >
-
-            <label>Horario preferido</label>
-
-            <input
-                type="time"
-                id="hora"
-            >
-<label>Tipo de servicio</label>
-
-<select id="tipoServicio">
-
-    <option value="">
-        Seleccioná un servicio
-    </option>
-
-    <option value="Mantenimiento general">
-        🔧 Mantenimiento general
-    </option>
-
-    <option value="Frenos y suspensión">
-        🚗 Frenos y suspensión
-    </option>
-
-    <option value="Embrague y transmisión">
-        ⚙️ Embrague y transmisión
-    </option>
-
-    <option value="Electricidad">
-        🔌 Electricidad
-    </option>
-
-    <option value="Diagnóstico">
-        🔍 Diagnóstico
-    </option>
-
-    <option value="Distribución">
-        🛠️ Distribución
-    </option>
-
-    <option value="Otro">
-        📋 Otro
-    </option>
-
-</select>
-
-
-            <label>Motivo de la consulta</label>
-
-            <textarea
-                id="motivo"
-                placeholder="Ej: Cambio de aceite, revisión, frenos..."
-            ></textarea>
-
-            <button
-                class="admin-button"
-                onclick="solicitarTurno()"
-            >
+            <button class="admin-button" id="botonSolicitar" type="submit">
                 📅 Solicitar turno
             </button>
 
-        </div>
+            <p id="resultadoTurno" role="status" aria-live="polite"></p>
+        </form>
 
-        <a
-            href="index.html"
-            class="btn btn-primary"
-        >
-            ← Volver al inicio
-        </a>
-
+        <a href="index.html" class="btn btn-primary">← Volver al inicio</a>
     </section>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-const SUPABASE_URL = "https://wzekdvkwdivzuujnvcnj.supabase.co";
-const SUPABASE_KEY = "sb_publishable_5y6uaC69wKM0WlNYRSfPyQ_RpeCSKJh";
-
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-</script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
+    const SUPABASE_URL = "https://wzekdvkwdivzuujnvcnj.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_5y6uaC69wKM0WlNYRSfPyQ_RpeCSKJh";
 
-        async function solicitarTurno() {
-
-    const cliente =
-        document.getElementById("cliente").value.trim();
-
-    const telefono =
-        document.getElementById("telefono").value.trim();
-
-    const vehiculo =
-        document.getElementById("vehiculo").value.trim();
-
-    const patente =
-        document.getElementById("patente").value.trim();
-
-    const fecha =
-        document.getElementById("fecha").value;
-
-    const hora =
-        document.getElementById("hora").value;
-
-    const motivo =
-        document.getElementById("motivo").value.trim();
-
-    const tipoServicio =
-        document.getElementById("tipoServicio").value;
-
-    if (
-        cliente === "" ||
-        telefono === "" ||
-        vehiculo === "" ||
-        patente === "" ||
-        fecha === "" ||
-        hora === "" ||
-        motivo === "" ||
-        tipoServicio === ""
-    ) {
-
-        alert("Por favor completá todos los campos.");
-
-        return;
-    }
-
-    const { error } = await supabaseClient
-        .from("Turnos")
-        .insert([
-            {
-                nombre: cliente,
-                telefono: telefono,
-                vehiculo: vehiculo,
-                patente: patente,
-                fecha: fecha,
-                hora: hora,
-                servicio: tipoServicio,
-                estado: "Pendiente",
-                motivo: motivo
-            }
-        ]);
-
-    if (error) {
-
-        console.error(error);
-
-        alert("❌ No se pudo enviar el turno.");
-
-        return;
-    }
-
-    alert(
-        "✅ Solicitud enviada correctamente. El taller deberá confirmar el turno."
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
     );
 
-    document.getElementById("cliente").value = "";
-    document.getElementById("telefono").value = "";
-    document.getElementById("vehiculo").value = "";
-    document.getElementById("patente").value = "";
-    document.getElementById("fecha").value = "";
-    document.getElementById("hora").value = "";
-    document.getElementById("motivo").value = "";
-    document.getElementById("tipoServicio").value = "";
+    const formulario = document.getElementById("formularioTurno");
+    const botonSolicitar = document.getElementById("botonSolicitar");
+    const resultado = document.getElementById("resultadoTurno");
 
-}
+    formulario.addEventListener("submit", solicitarTurno);
 
+    async function solicitarTurno(evento) {
+        evento.preventDefault();
+
+        const cliente = document.getElementById("cliente").value.trim();
+        const telefono = document.getElementById("telefono").value.trim();
+        const vehiculo = document.getElementById("vehiculo").value.trim();
+        const patente = document.getElementById("patente").value.trim();
+        const fecha = document.getElementById("fecha").value;
+        const hora = document.getElementById("hora").value;
+        const motivo = document.getElementById("motivo").value.trim();
+        const tipoServicio = document.getElementById("tipoServicio").value;
+
+        if (!cliente || !telefono || !vehiculo || !patente ||
+            !fecha || !hora || !motivo || !tipoServicio) {
+            resultado.textContent = "Completá todos los campos antes de continuar.";
+            return;
+        }
+
+        // Abrimos una pestaña durante el clic para reducir el riesgo
+        // de que el navegador bloquee la apertura de WhatsApp.
+        const pestanaWhatsApp = window.open("about:blank", "_blank");
+
+        botonSolicitar.disabled = true;
+        botonSolicitar.textContent = "Guardando solicitud...";
+        resultado.textContent = "Estamos registrando tu solicitud. Esperá un momento.";
+
+        try {
+            const { data: codigo, error } = await supabaseClient.rpc(
+                "solicitar_turno",
+                {
+                    p_nombre: cliente,
+                    p_telefono: telefono,
+                    p_vehiculo: vehiculo,
+                    p_patente: patente,
+                    p_fecha: fecha,
+                    p_hora: hora,
+                    p_servicio: tipoServicio,
+                    p_motivo: motivo
+                }
+            );
+
+            if (error) {
+                console.error("Error de Supabase:", error);
+
+                if (pestanaWhatsApp) {
+                    pestanaWhatsApp.close();
+                }
+
+                resultado.textContent =
+                    "No se pudo guardar la solicitud. Intentá nuevamente o comunicate con el taller.";
+                return;
+            }
+
+            if (!codigo || typeof codigo !== "string") {
+                if (pestanaWhatsApp) {
+                    pestanaWhatsApp.close();
+                }
+
+                resultado.textContent =
+                    "La solicitud no devolvió un código. Contactá al taller antes de volver a enviarla.";
+                return;
+            }
+
+            const mensaje =
+                "Hola, Precision Automotriz Group.\n\n" +
+                "Solicito un turno para mi vehículo.\n\n" +
+                "Código de solicitud: " + codigo + "\n" +
+                "Cliente: " + cliente + "\n" +
+                "Teléfono: " + telefono + "\n" +
+                "Vehículo: " + vehiculo + "\n" +
+                "Patente: " + patente + "\n" +
+                "Fecha solicitada: " + fecha + "\n" +
+                "Horario solicitado: " + hora + "\n" +
+                "Servicio: " + tipoServicio + "\n" +
+                "Motivo: " + motivo + "\n\n" +
+                "Quedo a la espera de la confirmación del taller.";
+
+            const enlaceWhatsApp =
+                "https://wa.me/5491140915051?text=" +
+                encodeURIComponent(mensaje);
+
+            resultado.textContent =
+                "✅ ¡Solicitud guardada correctamente! Tu código es " +
+                codigo +
+                ". Se abrirá WhatsApp con el mensaje preparado. Recordá pulsar Enviar.";
+
+            // El código se conserva visible en la página aunque WhatsApp
+            // no pueda abrirse.
+            if (pestanaWhatsApp) {
+                pestanaWhatsApp.location.href = enlaceWhatsApp;
+            } else {
+                window.location.href = enlaceWhatsApp;
+            }
+
+            formulario.reset();
+
+        } catch (error) {
+            console.error("Error inesperado:", error);
+
+            if (pestanaWhatsApp) {
+                pestanaWhatsApp.close();
+            }
+
+            resultado.textContent =
+                "Ocurrió un error al procesar la solicitud. Revisá tu conexión antes de volver a intentarlo.";
+        } finally {
+            botonSolicitar.disabled = false;
+            botonSolicitar.textContent = "📅 Solicitar turno";
+        }
+    }
     </script>
-
 </body>
-
 </html>
+```

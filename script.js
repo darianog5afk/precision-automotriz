@@ -1,9 +1,13 @@
+```javascript
 // ==========================================
-// DATOS DE LOS VEHÍCULOS
+// PRECISION AUTOMOTRIZ GROUP
+// SISTEMA DE SEGUIMIENTO DE VEHÍCULOS
 // ==========================================
+
+// Órdenes de demostración.
+// Podés conservarlas para realizar pruebas.
 
 const vehiculos = {
-
     "PAG-00125": {
         cliente: "Cliente de prueba",
         vehiculo: "Volkswagen Virtus",
@@ -24,281 +28,231 @@ const vehiculos = {
         patente: "AC 456 EF",
         kilometrajeIngreso: "124.650 km",
         kilometrajeSalida: "Pendiente",
+        foto: "",
         fechaIngreso: "30/09/2026",
         fechaEntrega: "02/10/2026",
         estado: "En diagnóstico",
         trabajo: "Diagnóstico general",
         observaciones: "Esperando resultado del diagnóstico."
     }
-
 };
 
 
 // ==========================================
-// BOTÓN DE CONSULTA
+// FUNCIONES DE SEGURIDAD Y FORMATO
 // ==========================================
 
-const boton = document.querySelector(".tracking-box .btn-primary");
-const campo = document.getElementById("codigoOrden");
+function escaparHTML(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, caracter => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[caracter]);
+}
 
-if (boton && campo) {
-
-    boton.addEventListener("click", function () {
-
-        const codigo = campo.value.trim().toUpperCase();
-
-        if (codigo === "") {
-            alert("Ingresá el código de tu orden.");
-            return;
-        }
-
-        let vehiculo = vehiculos[codigo];
-
-        if (!vehiculo) {
-
-            const ordenes =
-                JSON.parse(localStorage.getItem("ordenesPAG")) || {};
-
-            vehiculo = ordenes[codigo];
-        }
-
-        if (vehiculo) {
-
-            mostrarResultado(`
-
-                <div class="resultado">
-
-                    <h3>🚗 Seguimiento del vehículo</h3>
-
-                    <div class="ficha-cabecera">
-                        <span>ORDEN DE TRABAJO</span>
-                        <strong>${codigo}</strong>
-                    </div>
-
-                    <h4 class="titulo-seccion">
-                        🚗 Datos del vehículo
-                    </h4>
-
-                    <p>
-                        <strong>Cliente:</strong>
-                        ${vehiculo.cliente}
-                    </p>
-
-                    <p>
-                        <strong>Orden:</strong>
-                        ${codigo}
-                    </p>
-
-                    <p>
-                        <strong>Vehículo:</strong>
-                        ${vehiculo.vehiculo}
-                    </p>
-
-                    <p>
-                        <strong>Patente:</strong>
-                        ${vehiculo.patente}
-                    </p>
-
-                    <p>
-                        <strong>Kilometraje de ingreso:</strong>
-                        ${vehiculo.kilometrajeIngreso}
-                    </p>
-
-                    <p>
-                        <strong>Kilometraje de salida:</strong>
-                        ${vehiculo.kilometrajeSalida}
-                    </p>
-
-                    <h4 class="titulo-seccion">
-                        🔧 Trabajo y estado del vehículo
-                    </h4>
-<div class="progreso-vehiculo">
-
-    <div class="paso activo">
-        <span>1</span>
-        <small>Recepción</small>
-    </div>
-
-    <div class="linea"></div>
-
-    <div class="paso activo">
-        <span>2</span>
-        <small>Diagnóstico</small>
-    </div>
-
-    <div class="linea"></div>
-
-    <div class="paso activo">
-        <span>3</span>
-        <small>Reparación</small>
-    </div>
-
-    <div class="linea"></div>
-
-    <div class="paso">
-        <span>4</span>
-        <small>Listo</small>
-    </div>
-
-    <div class="linea"></div>
-
-    <div class="paso">
-        <span>5</span>
-        <small>Entregado</small>
-    </div>
-
-</div>
-<script>
-    const estadoActual = vehiculo.estado.toLowerCase();
-
-    const pasos = document.querySelectorAll(".progreso-vehiculo .paso");
-
-    pasos.forEach(paso => {
-        paso.classList.remove("activo");
-    });
-
-    if (estadoActual.includes("recepción")) {
-        pasos[0].classList.add("activo");
-    }
-
-    if (estadoActual.includes("diagnóstico")) {
-        pasos[0].classList.add("activo");
-        pasos[1].classList.add("activo");
-    }
-
-    if (estadoActual.includes("reparación")) {
-        pasos[0].classList.add("activo");
-        pasos[1].classList.add("activo");
-        pasos[2].classList.add("activo");
-    }
-
-    if (estadoActual.includes("listo")) {
-        pasos[0].classList.add("activo");
-        pasos[1].classList.add("activo");
-        pasos[2].classList.add("activo");
-        pasos[3].classList.add("activo");
-    }
-
-    if (estadoActual.includes("entregado")) {
-        pasos.forEach(paso => {
-            paso.classList.add("activo");
-        });
-    }
-</script>
-                    <p>
-                        <strong>Estado:</strong>
-                        <span class="estado-vehiculo">
-                            ${vehiculo.estado.toUpperCase()}
-                        </span>
-                    </p>
-<div class="mensaje-estado">
-    ${
-        vehiculo.estado.toLowerCase().includes("diagnóstico")
-        ? "🔍 Estamos revisando tu vehículo y realizando el diagnóstico correspondiente."
-        : vehiculo.estado.toLowerCase().includes("reparación")
-        ? "🔧 Nuestro equipo está trabajando en tu vehículo."
-        : vehiculo.estado.toLowerCase().includes("repuestos")
-? "📦 Estamos esperando los repuestos necesarios para continuar con el trabajo."
-        : vehiculo.estado.toLowerCase().includes("listo")
-        ? "✅ Tu vehículo ya está listo para retirar."
-        : vehiculo.estado.toLowerCase().includes("entregado")
-        ? "🚗 Tu vehículo fue entregado."
-        : "📋 Tu vehículo se encuentra en proceso de atención."
-    }
-</div>
-                    <p>
-                        <strong>Trabajo realizado:</strong>
-                        ${vehiculo.trabajo}
-                    </p>
-
-                    <p>
-                        <strong>Fecha de ingreso:</strong>
-                        ${vehiculo.fechaIngreso}
-                    </p>
-
-                    <p>
-                        <strong>Fecha estimada de entrega:</strong>
-                        ${vehiculo.fechaEntrega}
-                    </p>
-
-                    <h4 class="titulo-seccion">
-                        📝 Observaciones
-                    </h4>
-
-                    <p>
-                        <strong>Observaciones:</strong>
-                        ${vehiculo.observaciones}
-                    </p>
-
-                    <h4 class="titulo-seccion">
-                        📸 Fotos del vehículo
-                    </h4>
-
-                    ${
-                        vehiculo.foto
-                        ? `
-                            <img
-                                src="${vehiculo.foto}"
-                                alt="Foto del vehículo"
-                                class="foto-vehiculo"
-                            >
-                        `
-                        : ""
-                    }
-
-                </div>
-
-            `);
-
-        } else {
-
-            mostrarResultado(`
-
-                <div class="resultado error">
-
-                    <h3>❌ Orden no encontrada</h3>
-
-                    <p>
-                        El código ingresado no corresponde
-                        a ninguna orden registrada.
-                    </p>
-
-                    <p>
-                        Revisá el código e intentá nuevamente.
-                    </p>
-
-                </div>
-
-            `);
-
-        }
-
-    });
-
+function obtenerTexto(valor, alternativa = "No informado") {
+    return escaparHTML(valor || alternativa);
 }
 
 
 // ==========================================
-// MOSTRAR RESULTADO
+// CONECTAR FORMULARIO DE SEGUIMIENTO
+// ==========================================
+
+const formularioSeguimiento = document.getElementById("formularioSeguimiento");
+const boton = document.getElementById("botonConsulta");
+const campo = document.getElementById("codigoOrden");
+
+if (formularioSeguimiento && boton && campo) {
+    formularioSeguimiento.addEventListener("submit", function(evento) {
+        evento.preventDefault();
+        consultarVehiculo();
+    });
+}
+
+
+// ==========================================
+// BUSCAR VEHÍCULO
+// ==========================================
+
+function consultarVehiculo() {
+    const codigo = (campo?.value || "").trim().toUpperCase();
+
+    if (!codigo) {
+        mostrarResultado(`
+            <div class="resultado error">
+                <h3>⚠️ Ingresá el código</h3>
+                <p>Escribí el código de tu orden de trabajo para continuar.</p>
+            </div>
+        `);
+        campo?.focus();
+        return;
+    }
+
+    let vehiculo = vehiculos[codigo];
+
+    // Buscar también las órdenes guardadas en este navegador.
+    if (!vehiculo) {
+        try {
+            const ordenes = JSON.parse(
+                localStorage.getItem("ordenesPAG") || "{}"
+            );
+
+            vehiculo = ordenes[codigo];
+        } catch (error) {
+            console.error("No se pudieron leer las órdenes locales:", error);
+        }
+    }
+
+    if (!vehiculo) {
+        mostrarResultado(`
+            <div class="resultado error">
+                <h3>❌ Orden no encontrada</h3>
+                <p>El código ingresado no corresponde a una orden disponible.</p>
+                <p>Revisá que esté escrito correctamente.</p>
+                <p>Si el problema continúa, comunicate con el taller.</p>
+            </div>
+        `);
+        return;
+    }
+
+    mostrarFichaVehiculo(codigo, vehiculo);
+}
+
+
+// ==========================================
+// MOSTRAR FICHA DEL VEHÍCULO
+// ==========================================
+
+function mostrarFichaVehiculo(codigo, vehiculo) {
+    const estado = String(vehiculo.estado || "En recepción").toLowerCase();
+
+    const pasos = [
+        { nombre: "Recepción", palabras: ["recepción", "recepcion"] },
+        { nombre: "Diagnóstico", palabras: ["diagnóstico", "diagnostico"] },
+        { nombre: "Reparación", palabras: ["reparación", "reparacion", "esperando repuestos"] },
+        { nombre: "Listo", palabras: ["listo"] },
+        { nombre: "Entregado", palabras: ["entregado"] }
+    ];
+
+    let pasoActual = 0;
+
+    if (estado.includes("diagnóstico") || estado.includes("diagnostico")) {
+        pasoActual = 1;
+    } else if (estado.includes("reparación") ||
+               estado.includes("reparacion") ||
+               estado.includes("repuestos")) {
+        pasoActual = 2;
+    } else if (estado.includes("listo")) {
+        pasoActual = 3;
+    } else if (estado.includes("entregado")) {
+        pasoActual = 4;
+    }
+
+    const progreso = pasos.map((paso, indice) => `
+        <div class="paso ${indice <= pasoActual ? "activo" : ""}">
+            <span>${indice + 1}</span>
+            <small>${paso.nombre}</small>
+        </div>
+        ${indice < pasos.length - 1 ? '<div class="linea"></div>' : ""}
+    `).join("");
+
+    let mensajeEstado = "📋 Tu vehículo se encuentra en proceso de atención.";
+
+    if (estado.includes("diagnóstico") || estado.includes("diagnostico")) {
+        mensajeEstado = "🔍 Estamos revisando tu vehículo y realizando el diagnóstico correspondiente.";
+    } else if (estado.includes("repuestos")) {
+        mensajeEstado = "📦 Estamos esperando los repuestos necesarios para continuar con el trabajo.";
+    } else if (estado.includes("reparación") || estado.includes("reparacion")) {
+        mensajeEstado = "🔧 Nuestro equipo está trabajando en tu vehículo.";
+    } else if (estado.includes("listo")) {
+        mensajeEstado = "✅ Tu vehículo está listo para retirar. Comunicate con el taller para coordinar.";
+    } else if (estado.includes("entregado")) {
+        mensajeEstado = "🚗 Tu vehículo figura como entregado.";
+    } else if (estado.includes("recepción") || estado.includes("recepcion")) {
+        mensajeEstado = "📋 Registramos el ingreso de tu vehículo.";
+    }
+
+    const fotoHTML = vehiculo.foto
+        ? `
+            <h4 class="titulo-seccion">📸 Fotos del vehículo</h4>
+            <img
+                src="${escaparHTML(vehiculo.foto)}"
+                alt="Foto del vehículo"
+                class="foto-vehiculo"
+                loading="lazy"
+                onerror="this.style.display='none'"
+            >
+        `
+        : "";
+
+    mostrarResultado(`
+        <div class="resultado">
+            <h3>🚗 Seguimiento del vehículo</h3>
+
+            <div class="ficha-cabecera">
+                <span>ORDEN DE TRABAJO</span>
+                <strong>${escaparHTML(codigo)}</strong>
+            </div>
+
+            <h4 class="titulo-seccion">🚗 Datos del vehículo</h4>
+
+            <p><strong>Cliente:</strong> ${obtenerTexto(vehiculo.cliente)}</p>
+            <p><strong>Vehículo:</strong> ${obtenerTexto(vehiculo.vehiculo)}</p>
+            <p><strong>Patente:</strong> ${obtenerTexto(vehiculo.patente)}</p>
+            <p><strong>Kilometraje de ingreso:</strong> ${obtenerTexto(vehiculo.kilometrajeIngreso)}</p>
+            <p><strong>Kilometraje de salida:</strong> ${obtenerTexto(vehiculo.kilometrajeSalida)}</p>
+
+            <h4 class="titulo-seccion">🔧 Progreso del trabajo</h4>
+
+            <div class="progreso-vehiculo">
+                ${progreso}
+            </div>
+
+            <p>
+                <strong>Estado actual:</strong>
+                <span class="estado-vehiculo">${escaparHTML(String(vehiculo.estado || "En recepción").toUpperCase())}</span>
+            </p>
+
+            <div class="mensaje-estado">
+                ${escaparHTML(mensajeEstado)}
+            </div>
+
+            <p><strong>Trabajo a realizar o realizado:</strong> ${obtenerTexto(vehiculo.trabajo)}</p>
+            <p><strong>Fecha de ingreso:</strong> ${obtenerTexto(vehiculo.fechaIngreso)}</p>
+            <p><strong>Fecha estimada de entrega:</strong> ${obtenerTexto(vehiculo.fechaEntrega, "A confirmar")}</p>
+
+            <h4 class="titulo-seccion">📝 Observaciones</h4>
+            <p>${obtenerTexto(vehiculo.observaciones)}</p>
+
+            ${fotoHTML}
+        </div>
+    `);
+}
+
+
+// ==========================================
+// MOSTRAR RESULTADOS
 // ==========================================
 
 function mostrarResultado(contenido) {
+    let resultado = document.getElementById("resultadoSeguimiento");
 
-    let resultado = document.getElementById("resultado");
-
+    // Compatibilidad por si otra página todavía utiliza el ID anterior.
     if (!resultado) {
-
-        resultado = document.createElement("div");
-
-        resultado.id = "resultado";
-
-        campo.insertAdjacentElement(
-            "afterend",
-            resultado
-        );
-
+        resultado = document.getElementById("resultado");
     }
 
-    resultado.innerHTML = contenido;
+    if (!resultado && campo) {
+        resultado = document.createElement("div");
+        resultado.id = "resultadoSeguimiento";
+        campo.insertAdjacentElement("afterend", resultado);
+    }
 
+    if (resultado) {
+        resultado.innerHTML = contenido;
+    }
 }
+```

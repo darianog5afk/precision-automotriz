@@ -1,134 +1,58 @@
-```css
-/* ==========================================
-   PRECISION AUTOMOTRIZ GROUP
-   DISEÑO GENERAL
-   ========================================== */
-
-:root {
-    --pag-dark: #111827;
-    --pag-darker: #020617;
-    --pag-accent: #f59e0b;
-    --pag-accent-hover: #d97706;
-    --pag-bg: #f4f6f8;
-    --pag-white: #ffffff;
-    --pag-text: #1e293b;
-    --pag-muted: #64748b;
-    --pag-border: #e2e8f0;
-    --pag-radius: 12px;
-    --pag-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 20px;
-}
-
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: var(--pag-bg);
-    color: var(--pag-text);
-    line-height: 1.6;
+    background: #f4f6f8;
+    color: #1a1a1a;
 }
 
-img {
-    max-width: 100%;
-}
-
-button,
-input,
-select,
-textarea {
-    font: inherit;
-}
-
-button,
-a {
-    -webkit-tap-highlight-color: transparent;
-}
-
-a {
-    color: inherit;
-}
-
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-    outline: 3px solid var(--pag-accent);
-    outline-offset: 3px;
-}
-
-/* ==========================================
-   ENCABEZADO Y NAVEGACIÓN
-   ========================================== */
+/* ENCABEZADO */
 
 header {
-    background: var(--pag-dark);
-    color: var(--pag-white);
-    padding: 18px clamp(18px, 5vw, 60px);
+    background: #111827;
+    color: white;
+    padding: 20px 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 25px;
-    flex-wrap: wrap;
-}
-
-.logo {
-    flex-shrink: 0;
 }
 
 .logo h1 {
-    font-size: 28px;
-    letter-spacing: 2px;
-    font-weight: 900;
-    line-height: 1.2;
+    font-size: 26px;
+    letter-spacing: 1px;
 }
 
 .logo p {
     color: #cbd5e1;
     margin-top: 5px;
-    font-size: 13px;
-}
-
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px 22px;
+    font-size: 14px;
 }
 
 nav a {
-    color: var(--pag-white);
+    color: white;
     text-decoration: none;
+    margin-left: 25px;
     font-weight: bold;
     font-size: 14px;
-    padding: 8px 0;
-    transition: color 0.2s ease;
 }
 
 nav a:hover {
-    color: var(--pag-accent);
+    color: #f59e0b;
 }
 
-/* ==========================================
-   PORTADA PRINCIPAL
-   ========================================== */
+/* PORTADA */
 
 .hero {
-    min-height: 590px;
+    min-height: 650px;
+
     background:
         linear-gradient(
-            135deg,
-            rgba(2, 6, 23, 0.78),
-            rgba(17, 24, 39, 0.58)
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 0, 0, 0.65)
         ),
         url("poster-pag.jpg");
 
@@ -139,323 +63,306 @@ nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+
     text-align: center;
-    color: var(--pag-white);
-    padding: 70px 22px;
+    color: white;
+
+    padding: 60px 20px;
 }
 
 .hero-content {
-    width: 100%;
-    max-width: 900px;
+    max-width: 850px;
 }
 
+.hero h2 {
+    font-size: 52px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 35px;
+    color: #e5e7eb;
+}
+
+/* BOTONES */
+
+.btn {
+    display: inline-block;
+    padding: 15px 28px;
+    margin: 5px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background: #f59e0b;
+    color: #111827;
+}
+
+.btn-primary:hover {
+    background: #d97706;
+}
+
+.btn-secondary {
+    background: white;
+    color: #111827;
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+/* SERVICIOS */
+
+.services {
+    padding: 80px 8%;
+    text-align: center;
+}
+
+.services h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.services-description {
+    color: #64748b;
+    margin-bottom: 45px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.service-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-card h3 {
+    margin: 15px 0 10px;
+}
+
+.service-card p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* SEGUIMIENTO */
+
+.tracking {
+    background: #111827;
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.tracking h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.tracking p {
+    color: #cbd5e1;
+    margin-bottom: 30px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #020617;
+    color: #94a3b8;
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 14px;
+}
+
+/* CELULAR */
+
+@media (max-width: 768px) {
+
+    header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    nav a {
+        margin: 0 7px;
+        font-size: 12px;
+    }
+
+    .hero h2 {
+        font-size: 36px;
+    }
+
+    .hero p {
+        font-size: 17px;
+    }
+}
+/* MARCA PRINCIPAL */
+
 .hero-brand {
-    margin-bottom: 28px;
+    margin-bottom: 25px;
 }
 
 .hero-brand span {
     display: block;
-    font-size: clamp(58px, 9vw, 88px);
+    font-size: 82px;
     font-weight: 900;
     letter-spacing: 8px;
-    line-height: 1.1;
+    line-height: 1;
 }
 
 .hero-brand small {
     display: block;
     margin-top: 8px;
-    font-size: clamp(10px, 2vw, 15px);
-    letter-spacing: 3px;
-    color: var(--pag-accent);
+    font-size: 15px;
+    letter-spacing: 4px;
+    color: #f59e0b;
     font-weight: bold;
 }
 
+/* BOTONES DE PORTADA */
+
+.hero-buttons {
+    margin-top: 30px;
+}
+
+/* TEXTO PRINCIPAL */
+
 .hero h2 {
-    font-size: clamp(32px, 5vw, 52px);
+    font-size: 48px;
     font-weight: 800;
-    line-height: 1.15;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .hero p {
     max-width: 700px;
     margin: 0 auto;
-    color: #e5e7eb;
-    font-size: clamp(16px, 2vw, 20px);
-    line-height: 1.7;
+    line-height: 1.6;
 }
-
-.hero-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 32px;
-}
-
-/* ==========================================
-   BOTONES
-   ========================================== */
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-height: 48px;
-    padding: 13px 24px;
-    border: 2px solid transparent;
-    border-radius: 8px;
-    text-decoration: none;
-    text-align: center;
-    font-weight: bold;
-    font-size: 15px;
-    line-height: 1.4;
-    cursor: pointer;
-    transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
-}
-
-.btn-primary {
-    background: var(--pag-accent);
-    color: var(--pag-dark);
-}
-
-.btn-primary:hover {
-    background: var(--pag-accent-hover);
-    transform: translateY(-2px);
-}
-
-.btn-secondary {
-    background: var(--pag-white);
-    color: var(--pag-dark);
-}
-
-.btn-secondary:hover {
-    background: #e5e7eb;
-    transform: translateY(-2px);
-}
-
-/* ==========================================
-   SERVICIOS
-   ========================================== */
-
-.services {
-    padding: 80px clamp(20px, 7vw, 100px);
-    text-align: center;
-}
-
-.services h2 {
-    font-size: clamp(29px, 4vw, 38px);
-    line-height: 1.25;
-    color: var(--pag-dark);
-    margin-bottom: 14px;
-}
-
-.services-description {
-    color: var(--pag-muted);
-    max-width: 650px;
-    margin: 0 auto 42px;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.service-card {
-    background: var(--pag-white);
-    padding: 30px 22px;
-    border: 1px solid #edf0f4;
-    border-radius: var(--pag-radius);
-    box-shadow: var(--pag-shadow);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
-}
-
-.service-card h3 {
-    color: var(--pag-dark);
-    font-size: 19px;
-    line-height: 1.4;
-    margin-bottom: 10px;
-}
-
-.service-card p {
-    color: var(--pag-muted);
-    font-size: 14px;
-}
-
-/* ==========================================
-   SECCIONES DE TURNOS, SEGUIMIENTO Y CONTACTO
-   ========================================== */
-
-.tracking {
-    background: var(--pag-dark);
-    color: var(--pag-white);
-    padding: 75px 22px;
-    text-align: center;
-}
-
-.tracking h2 {
-    font-size: clamp(27px, 4vw, 37px);
-    line-height: 1.3;
-    margin-bottom: 16px;
-}
-
-.tracking p {
-    max-width: 650px;
-    color: #cbd5e1;
-    margin: 0 auto 28px;
-}
-
-.tracking .btn {
-    margin: 5px;
-}
-
-/* ==========================================
-   PIE DE PÁGINA
-   ========================================== */
-
-footer {
-    background: var(--pag-darker);
-    color: #cbd5e1;
-    text-align: center;
-    padding: 30px 20px;
-    font-size: 13px;
-}
-
-footer p {
-    margin: 4px 0;
-}
-
-/* ==========================================
-   PÁGINA DE SEGUIMIENTO
-   ========================================== */
+/* PÁGINA DE SEGUIMIENTO */
 
 .tracking-page {
-    min-height: 600px;
-    background: var(--pag-bg);
+    min-height: 650px;
+    background: #f4f6f8;
+
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding: 55px 20px;
+
+    padding: 60px 20px;
 }
 
 .tracking-box {
     width: 100%;
-    max-width: 720px;
-    min-width: 0;
-    background: var(--pag-white);
-    padding: clamp(22px, 5vw, 45px);
-    border: 1px solid #edf0f4;
-    border-radius: 16px;
+    max-width: 550px;
+
+    background: white;
+
+    padding: 50px 40px;
+
+    border-radius: 15px;
+
     text-align: center;
-    box-shadow: var(--pag-shadow);
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
 }
 
 .tracking-logo {
-    font-size: 56px;
+    font-size: 58px;
     font-weight: 900;
     letter-spacing: 7px;
-    line-height: 1.2;
-    color: var(--pag-dark);
-    margin-bottom: 18px;
+
+    color: #111827;
+
+    margin-bottom: 20px;
 }
 
 .tracking-box h2 {
-    color: var(--pag-dark);
-    font-size: clamp(26px, 4vw, 34px);
-    line-height: 1.3;
-    margin-bottom: 14px;
+    font-size: 32px;
+    margin-bottom: 15px;
 }
 
-.tracking-box > p {
-    color: var(--pag-muted);
-    line-height: 1.7;
-    margin-bottom: 24px;
-}
-
-#formularioSeguimiento {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    text-align: left;
-}
-
-#formularioSeguimiento label {
-    color: var(--pag-dark);
-    font-size: 14px;
-    font-weight: bold;
+.tracking-box p {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 30px;
 }
 
 .tracking-box input {
     width: 100%;
-    min-height: 50px;
-    padding: 14px 16px;
-    border: 2px solid var(--pag-border);
-    border-radius: 8px;
+
+    padding: 16px;
+
+    border: 2px solid #e2e8f0;
+
+    border-radius: 7px;
+
     font-size: 16px;
+
     text-align: center;
-    background: var(--pag-white);
-    color: var(--pag-text);
+
+    outline: none;
+
+    margin-bottom: 15px;
 }
 
 .tracking-box input:focus {
-    border-color: var(--pag-accent);
+    border-color: #f59e0b;
 }
 
 .tracking-box .btn {
-    width: 100%;
     border: none;
-    margin: 4px 0 0;
+    cursor: pointer;
+    width: 100%;
 }
 
 .volver {
-    display: inline-block;
+    display: block;
+
     margin-top: 25px;
-    color: var(--pag-muted);
+
+    color: #64748b;
+
     text-decoration: none;
+
     font-size: 14px;
 }
 
 .volver:hover {
-    color: var(--pag-accent-hover);
+    color: #f59e0b;
 }
+/* RESULTADO DEL SEGUIMIENTO */
 
-/* ==========================================
-   RESULTADOS DEL SEGUIMIENTO
-   ========================================== */
-
-#resultado,
-#resultadoSeguimiento {
-    margin-top: 28px;
+#resultado {
+    margin-top: 30px;
     text-align: left;
-    min-width: 0;
 }
 
 .resultado {
-    min-width: 0;
     background: #f8fafc;
-    border: 1px solid var(--pag-border);
+    border: 1px solid #e2e8f0;
     border-radius: 12px;
-    padding: clamp(16px, 4vw, 25px);
-    overflow-wrap: anywhere;
+    padding: 25px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
 }
 
 .resultado h3 {
     font-size: 22px;
-    line-height: 1.4;
-    color: var(--pag-dark);
+    color: #111827;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -464,7 +371,7 @@ footer p {
     color: #334155;
     margin: 12px 0;
     padding-bottom: 10px;
-    border-bottom: 1px solid var(--pag-border);
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .resultado p:last-child {
@@ -472,12 +379,21 @@ footer p {
 }
 
 .resultado strong {
-    color: var(--pag-dark);
+    color: #111827;
 }
+
+/* ESTADO DEL VEHÍCULO */
+
+.resultado p:nth-child(4) {
+    color: #15803d;
+    font-weight: bold;
+}
+
+/* ORDEN NO ENCONTRADA */
 
 .resultado.error {
     text-align: center;
-    border-color: #fecaca;
+    border: 1px solid #fecaca;
     background: #fef2f2;
 }
 
@@ -488,22 +404,36 @@ footer p {
 .resultado.error p {
     color: #991b1b;
 }
-
 /* ==========================================
-   CABECERA DE LA ORDEN
+   ESTADO DEL VEHÍCULO
    ========================================== */
 
+.estado-vehiculo {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-left: 8px;
+    border-radius: 20px;
+    background: #111827 !important;
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    line-height: 1.2;
+}
+/* CABECERA DE LA ORDEN */
+
 .ficha-cabecera {
-    background: var(--pag-dark);
-    color: var(--pag-white);
-    padding: 16px;
+    background: #111827;
+    color: white;
+
+    padding: 15px 20px;
+
     margin: 20px 0 25px;
+
     border-radius: 8px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
 }
 
 .ficha-cabecera span {
@@ -515,56 +445,150 @@ footer p {
 
 .ficha-cabecera strong {
     font-size: 20px;
-    color: var(--pag-accent);
+    color: #f59e0b;
 }
-
-/* ==========================================
-   TÍTULOS DE SECCIÓN
-   ========================================== */
+/* TITULOS DE SECCIONES */
 
 .titulo-seccion {
-    margin-top: 26px;
+
+    margin-top: 25px;
     margin-bottom: 15px;
+
     padding-bottom: 8px;
-    border-bottom: 2px solid var(--pag-accent);
+
+    border-bottom: 2px solid #f59e0b;
+
     font-size: 18px;
-    line-height: 1.4;
-    color: var(--pag-dark);
+
+    color: #111827;
+
     font-weight: 800;
 }
-
-/* ==========================================
-   ESTADO DEL VEHÍCULO
-   ========================================== */
-
-.estado-vehiculo {
-    display: inline-block;
-    padding: 7px 12px;
-    margin: 4px 0;
-    border-radius: 20px;
-    background: var(--pag-dark);
-    color: var(--pag-white);
-    font-weight: bold;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-/* ==========================================
-   FOTO DEL VEHÍCULO
-   ========================================== */
+/* FOTOS DEL VEHÍCULO */
 
 .foto-vehiculo {
     display: block;
+
     width: 100%;
     max-width: 450px;
-    max-height: 350px;
+
+    height: 280px;
+
     object-fit: cover;
+
     margin: 20px auto;
+
     border-radius: 12px;
-    border: 1px solid var(--pag-border);
-    box-shadow: var(--pag-shadow);
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+}
+/* ==========================================
+   PANEL ADMINISTRATIVO
+   ========================================== */
+
+.admin-page {
+    min-height: 650px;
+    background: #f4f6f8;
+    padding: 60px 20px;
 }
 
+.admin-box {
+    width: 100%;
+    max-width: 850px;
+    margin: auto;
+    background: white;
+    padding: 45px;
+    border-radius: 15px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+}
+
+.admin-logo {
+    font-size: 55px;
+    font-weight: 900;
+    letter-spacing: 7px;
+    color: #111827;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.admin-box h2 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #111827;
+}
+
+.admin-description {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 35px;
+}
+
+#formNuevaOrden {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+#formNuevaOrden input,
+#formNuevaOrden select,
+#formNuevaOrden textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    outline: none;
+}
+
+#formNuevaOrden input:focus,
+#formNuevaOrden select:focus,
+#formNuevaOrden textarea:focus {
+    border-color: #f59e0b;
+}
+
+#formNuevaOrden textarea {
+    resize: vertical;
+}
+
+#formNuevaOrden textarea,
+#formNuevaOrden button {
+    grid-column: 1 / -1;
+}
+
+.admin-button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 7px;
+    background: #111827;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.admin-button:hover {
+    background: #f59e0b;
+    color: #111827;
+}
+
+@media (max-width: 700px) {
+
+    .admin-box {
+        padding: 25px;
+    }
+
+    #formNuevaOrden {
+        grid-template-columns: 1fr;
+    }
+
+}
 /* ==========================================
    PROGRESO DEL VEHÍCULO
    ========================================== */
@@ -573,32 +597,28 @@ footer p {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    gap: 5px;
-    margin: 28px 0;
-    padding: 15px 0;
-    width: 100%;
-    overflow-x: auto;
+    gap: 8px;
+    margin: 30px 0;
+    padding: 20px 10px;
 }
 
 .paso {
     display: flex;
-    flex: 1 1 0;
     flex-direction: column;
     align-items: center;
-    min-width: 0;
+    min-width: 70px;
     color: #94a3b8;
 }
 
 .paso span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     background: #e2e8f0;
     color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
 }
 
@@ -606,191 +626,88 @@ footer p {
     margin-top: 8px;
     font-size: 11px;
     text-align: center;
-    line-height: 1.3;
 }
 
 .paso.activo span {
-    background: var(--pag-accent);
-    color: var(--pag-dark);
+    background: #f59e0b;
+    color: #111827;
 }
 
 .paso.activo small {
-    color: var(--pag-dark);
+    color: #111827;
     font-weight: bold;
 }
 
 .linea {
-    flex: 0 1 45px;
-    min-width: 8px;
+    width: 45px;
     height: 3px;
-    background: var(--pag-border);
-    margin-top: 17px;
+    background: #e2e8f0;
+    margin-top: 18px;
 }
 
 .paso.activo + .linea {
-    background: var(--pag-accent);
+    background: #f59e0b;
 }
 
+@media (max-width: 600px) {
+
+    .progreso-vehiculo {
+        gap: 2px;
+    }
+
+    .linea {
+        width: 15px;
+    }
+
+    .paso {
+        min-width: 50px;
+    }
+
+    .paso span {
+        width: 32px;
+        height: 32px;
+    }
+
+    .paso small {
+        font-size: 9px;
+    }
+}
 /* ==========================================
-   PANEL ADMINISTRATIVO
-   ========================================== */
-
-.admin-page {
-    min-height: 600px;
-    background: var(--pag-bg);
-    padding: 45px 20px;
-}
-
-.admin-box {
-    width: 100%;
-    max-width: 950px;
-    min-width: 0;
-    margin: 0 auto;
-    background: var(--pag-white);
-    padding: clamp(22px, 5vw, 42px);
-    border: 1px solid #edf0f4;
-    border-radius: 15px;
-    box-shadow: var(--pag-shadow);
-}
-
-.admin-logo {
-    font-size: 54px;
-    font-weight: 900;
-    letter-spacing: 7px;
-    line-height: 1.2;
-    color: var(--pag-dark);
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.admin-box h2 {
-    text-align: center;
-    font-size: clamp(25px, 4vw, 32px);
-    line-height: 1.3;
-    margin-bottom: 12px;
-    color: var(--pag-dark);
-}
-
-.admin-description {
-    text-align: center;
-    color: var(--pag-muted);
-    margin-bottom: 28px;
-}
-
-/* FORMULARIO DE NUEVA ORDEN */
-
-#formNuevaOrden {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-}
-
-#formNuevaOrden label {
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--pag-dark);
-}
-
-#formNuevaOrden input,
-#formNuevaOrden select,
-#formNuevaOrden textarea {
-    width: 100%;
-    min-width: 0;
-    padding: 13px;
-    border: 1px solid #cbd5e1;
-    border-radius: 7px;
-    font-size: 15px;
-    background: var(--pag-white);
-    color: var(--pag-text);
-}
-
-#formNuevaOrden input:focus,
-#formNuevaOrden select:focus,
-#formNuevaOrden textarea:focus {
-    border-color: var(--pag-accent);
-}
-
-#formNuevaOrden textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-#formNuevaOrden textarea,
-#formNuevaOrden button {
-    grid-column: 1 / -1;
-}
-
-/* BOTONES DEL ADMINISTRADOR */
-
-.admin-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 46px;
-    padding: 12px 16px;
-    margin-top: 10px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    background: var(--pag-dark);
-    color: var(--pag-white);
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease;
-}
-
-.admin-button:hover {
-    background: var(--pag-accent);
-    color: var(--pag-dark);
-}
-
-.admin-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-/* ==========================================
-   LISTADO DE ÓRDENES Y TURNOS
+   LISTADO DE ÓRDENES
    ========================================== */
 
 .orden-admin {
-    min-width: 0;
-    background: var(--pag-white);
-    border: 1px solid var(--pag-border);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 12px;
-    padding: clamp(16px, 4vw, 22px);
-    margin: 16px 0;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-    overflow-wrap: anywhere;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .orden-admin h3 {
-    color: var(--pag-dark);
-    font-size: 19px;
-    line-height: 1.4;
-    margin-bottom: 14px;
+    margin-top: 0;
+    color: #111827;
+    font-size: 20px;
 }
 
 .orden-admin p {
-    margin: 9px 0;
+    margin: 8px 0;
     color: #475569;
 }
 
 .orden-admin strong {
-    color: var(--pag-dark);
+    color: #111827;
 }
 
 .orden-admin .admin-button {
-    margin-top: 10px;
+    margin-top: 12px;
 }
-
 /* ==========================================
    ESTADOS DE LAS ÓRDENES
    ========================================== */
 
-.estado-orden,
-.estado-turno {
+.estado-orden {
     display: inline-block;
     padding: 6px 12px;
     border-radius: 20px;
@@ -799,8 +716,7 @@ footer p {
     margin-top: 4px;
 }
 
-.estado-recepcion,
-.estado-pendiente {
+.estado-recepcion {
     background: #fef3c7;
     color: #92400e;
 }
@@ -820,8 +736,7 @@ footer p {
     color: #9a3412;
 }
 
-.estado-listo,
-.estado-confirmado {
+.estado-listo {
     background: #dcfce7;
     color: #166534;
 }
@@ -830,224 +745,120 @@ footer p {
     background: #e5e7eb;
     color: #374151;
 }
+/* ==========================================
+   ESTADOS DE LOS TURNOS
+   ========================================== */
+
+.estado-turno {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.estado-pendiente {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.estado-confirmado {
+    background: #dcfce7;
+    color: #166534;
+}
 
 .estado-cancelado {
     background: #fee2e2;
     color: #991b1b;
 }
-
 .estado-atendido {
     background: #dbeafe;
     color: #1e40af;
 }
 
-/* ==========================================
-   RESPONSIVE: TABLET
-   ========================================== */
+/* =====================================
+   ADAPTACIÓN PARA CELULARES
+   PRECISION AUTOMOTRIZ GROUP
+===================================== */
 
-@media (max-width: 900px) {
-    .services-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+@media screen and (max-width: 768px) {
+
+    * {
+        box-sizing: border-box;
     }
 
-    header {
-        justify-content: center;
-        text-align: center;
-    }
-
-    nav {
+    body {
         width: 100%;
-    }
-
-    .hero {
-        min-height: 520px;
-    }
-}
-
-/* ==========================================
-   RESPONSIVE: CELULAR
-   ========================================== */
-
-@media (max-width: 600px) {
-    header {
-        padding: 18px 14px;
-        gap: 14px;
-    }
-
-    .logo h1 {
-        font-size: 25px;
-    }
-
-    .logo p {
-        font-size: 12px;
-    }
-
-    nav {
-        gap: 5px 14px;
-    }
-
-    nav a {
-        font-size: 13px;
-        padding: 7px 0;
         margin: 0;
+        overflow-x: hidden;
     }
 
-    .hero {
-        min-height: 500px;
-        padding: 55px 18px;
-        background-position: center;
+    img {
+        max-width: 100%;
+        height: auto;
     }
 
-    .hero-brand span {
-        letter-spacing: 5px;
+    header {
+        padding: 15px;
     }
 
-    .hero-brand small {
-        letter-spacing: 2px;
+    main {
+        width: 100%;
+        padding: 15px;
     }
 
-    .hero h2 {
-        font-size: 32px;
+    section {
+        width: 100%;
+        max-width: 100%;
     }
 
-    .hero p {
+    button,
+    input,
+    select,
+    textarea {
+        max-width: 100%;
         font-size: 16px;
     }
 
-    .hero-buttons {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
+    button {
+        min-height: 44px;
+        padding: 10px 15px;
     }
 
-    .hero-buttons .btn {
+    input,
+    select,
+    textarea {
         width: 100%;
-        margin: 0;
+        padding: 12px;
     }
 
-    .btn {
-        min-height: 48px;
-        padding: 13px 16px;
-        font-size: 14px;
+    .contenedor,
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px;
     }
 
-    .services {
-        padding: 55px 18px;
-    }
-
-    .services-grid {
+    .servicios,
+    .tarjetas,
+    .cards {
+        display: grid;
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 15px;
     }
 
-    .service-card {
-        padding: 25px 20px;
+    h1 {
+        font-size: 28px;
+        line-height: 1.2;
     }
 
-    .tracking {
-        padding: 55px 18px;
+    h2 {
+        font-size: 23px;
     }
 
-    .tracking-page {
-        padding: 30px 12px;
+    p {
+        line-height: 1.5;
+        overflow-wrap: anywhere;
     }
 
-    .tracking-box {
-        padding: 22px 16px;
-        border-radius: 12px;
-    }
-
-    .tracking-logo {
-        font-size: 46px;
-        letter-spacing: 5px;
-    }
-
-    .tracking-box h2 {
-        font-size: 26px;
-    }
-
-    .resultado h3 {
-        font-size: 19px;
-    }
-
-    .ficha-cabecera {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .ficha-cabecera strong {
-        font-size: 18px;
-    }
-
-    .progreso-vehiculo {
-        justify-content: flex-start;
-        gap: 4px;
-    }
-
-    .paso span {
-        width: 30px;
-        height: 30px;
-        font-size: 13px;
-    }
-
-    .paso small {
-        font-size: 9px;
-    }
-
-    .linea {
-        min-width: 7px;
-        margin-top: 14px;
-    }
-
-    .admin-page {
-        padding: 25px 12px;
-    }
-
-    .admin-box {
-        padding: 22px 16px;
-        border-radius: 12px;
-    }
-
-    .admin-logo {
-        font-size: 45px;
-        letter-spacing: 5px;
-    }
-
-    #formNuevaOrden {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    #formNuevaOrden textarea,
-    #formNuevaOrden button {
-        grid-column: auto;
-    }
-
-    .orden-admin {
-        padding: 16px;
-    }
-
-    .orden-admin h3 {
-        font-size: 17px;
-    }
-
-    footer {
-        padding: 25px 15px;
-    }
 }
-
-/* ==========================================
-   ACCESIBILIDAD: MENOS ANIMACIONES
-   ========================================== */
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-    }
-}
-```

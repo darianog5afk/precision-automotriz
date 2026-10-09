@@ -257,4 +257,226 @@ function dibujarOrdenes(ordenes) {
             <p><strong>Trabajo:</strong> ${escaparHTML(orden.trabajo || "-")}</p>
 
             <button class="admin-button" onclick="editarDesdeLista('${escaparHTML(codigo)}')">✏️ Editar orden</button>
+            <button class="admin-button" onclick="window.open('seguimiento.html?orden=${encodeURIComponent(codigo)}', '_blank')">👁️ Ver seguimiento</button>
+        </div>
+    `).join("");
+}
+
+function filtrarOrdenes() {
+    const texto = (document.getElementById("buscarOrden")?.value || "").trim().toLowerCase();
+    const ordenes = JSON.parse(localStorage.getItem("ordenesPAG")) || {};
+
+    const filtradas = Object.fromEntries(
+        Object.entries(ordenes).filter(([codigo, orden]) =>
+            [
+                codigo,
+                orden.cliente,
+                orden.patente,
+                orden.vehiculo,
+                orden.telefono
+            ].some(valor => String(valor || "").toLowerCase().includes(texto))
+        )
+    );
+
+    dibujarOrdenes(filtradas);
+}
+
+function editarDesdeLista(codigo) {
+    mostrarEditarOrden();
+    document.getElementById("codigoEditar").value = codigo;
+    buscarOrdenParaEditar();
+}
+
+// ==========================================
+// VER TURNOS - SUPABASE
+// ==========================================
+
+let turnosAdmin = [];
+
+async function mostrarTurnos() {
+    const adminBox = document.querySelector(".admin-box");
+
+    adminBox.innerHTML = `
+        <div class="admin-logo">PAG</div>
+        <h2>📅 Turnos del taller</h2>
+        <p class="admin-description">Administración de turnos de Precision Automotriz Group.</p>
+
+        <input type="text" id="buscarTurno" placeholder="🔎 Buscar por código, cliente, patente o vehículo..." oninput="filtrarTurnos()">
+
+        <div id="listaTurnos" aria-live="polite">Cargando turnos...</div>
+
+        <button class="admin-button" onclick="volverAlPanel()">← Volver al panel</button>
+    `;
+
+    if (!window.supabaseClient) {
+        document.getElementById("listaTurnos").textContent =
+            "No se pudo iniciar la conexión con Supabase. Recargá la página.";
+        return;
+    }
+
+    const { data, error } = await window.supabaseClient
+        .from("Turnos")
+        .select("*")
+        .order("fecha", { ascending: true })
+        .order("hora", { ascending: true });
+
+    if (error) {
+        console.error("Error al cargar turnos:", error);
+        document.getElementById("listaTurnos").innerHTML =
+            "<p>No se pudieron cargar los turnos. Revisá la sesión y los permisos de Supabase.</p>";
+        return;
+    }
+
+    turnosAdmin = data || [];
+    dibujarTurnos();
+}
+
+function escaparHTML(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, caracter => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[caracter]);
+}
+
+function dibujarTurnos() {
+    const contenedor = document.getElementById("listaTurnos");
+    if (!contenedor) return;
+
+    const buscar = (document.getElementById("buscarTurno")?.value || "").toLowerCase().trim();
+
+    const turnos = [...turnosAdmin]
+        .filter(t => [
+            t.codigo, t.nombre, t.telefono, t.vehiculo,
+            t.patente, t.servicio, t.estado
+        ].some(valor => String(valor || "").toLowerCase().includes(buscar)))
+        .sort((a, b) => {
+            if (a.estado === "Cancelado" && b.estado !== "Cancelado") return 1;
+            if (a.estado !== "Cancelado" && b.estado === "Cancelado") return -1;
+            return new Date(`${a.fecha}T${a.hora}`) - new Date(`${b.fecha}T${b.hora}`);
+        });
+
+    if (!turnos.length) {
+        contenedor.innerHTML = `<p class="admin-description">📭 No hay turnos para mostrar.</p>`;
+        return;
+    }
+
+    contenedor.innerHTML = turnos.map(t => `
+        <div class="orden-admin">
+            <h3>📅 ${escaparHTML(t.fecha ? t.fecha.split("-").reverse().join("/") : "-")} — ${escaparHTML(t.hora || "-")}</h3>
+            <p><strong>Código de solicitud:</strong> ${escaparHTML(t.codigo || "Sin código")}</p>
+            <p><strong>Cliente:</strong> ${escaparHTML(t.nombre || "-")}</p>
+            <p><strong>Teléfono:</strong> ${escaparHTML(t.telefono || "-")}</p>
+            <p><strong>Vehículo:</strong> ${escaparHTML(t.vehiculo || "-")}</p>
+            <p><strong>Patente:</strong> ${escaparHTML(t.patente || "-")}</p>
+            <p><strong>Tipo de servicio:</strong> ${escaparHTML(t.servicio || "No especificado")}</p>
+            <p><strong>Motivo:</strong> ${escaparHTML(t.motivo || "-")}</p>
+            <p><strong>Estado:</strong> ${escaparHTML(t.estado || "Pendiente")}</p>
+
+            <button class="admin-button" onclick="confirmarTurno(${Number(t.id)})">✅ Confirmar turno</button>
+            <button class="admin-button" onclick="atenderTurno(${Number(t.id)})">🔧 Marcar como atendido</button>
+            <button class="admin-button" onclick="cancelarTurno(${Number(t.id)})">❌ Cancelar turno</button>
+            <button class="admin-button" onclick="eliminarTurno(${Number(t.id)})">🗑️ Eliminar turno</button>
+        </div>
+    `).join("");
+}
+
+function filtrarTurnos() {
+    dibujarTurnos();
+}
+
+// ==========================================
+// CAMBIAR ESTADO Y ELIMINAR TURNOS
+// ==========================================
+
+async function confirmarTurno(id) {
+    await cambiarEstadoTurno(id, "Confirmado");
+}
+
+async function atenderTurno(id) {
+    await cambiarEstadoTurno(id, "Atendido");
+}
+
+async function cancelarTurno(id) {
+    await cambiarEstadoTurno(id, "Cancelado");
+}
+
+async function cambiarEstadoTurno(id, estado) {
+    const { error } = await window.supabaseClient
+        .from("Turnos")
+        .update({ estado })
+        .eq("id", id);
+
+    if (error) {
+        console.error("Error al actualizar turno:", error);
+        alert("No se pudo actualizar el turno. Revisá los permisos de Supabase.");
+        return;
+    }
+
+    alert("Turno actualizado correctamente.");
+    await mostrarTurnos();
+}
+
+async function eliminarTurno(id) {
+    if (!confirm("¿Querés eliminar este turno definitivamente?")) return;
+
+    const { error } = await window.supabaseClient
+        .from("Turnos")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        console.error("Error al eliminar turno:", error);
+        alert("No se pudo eliminar el turno. Revisá los permisos de Supabase.");
+        return;
+    }
+
+    alert("Turno eliminado correctamente.");
+    await mostrarTurnos();
+}
+
+// ==========================================
+// GUARDAR TURNO DESDE ADMINISTRACIÓN
+// ==========================================
+
+async function guardarTurno() {
+    const nombre = document.getElementById("turnoCliente")?.value.trim() || "";
+    const telefono = document.getElementById("turnoTelefono")?.value.trim() || "";
+    const vehiculo = document.getElementById("turnoVehiculo")?.value.trim() || "";
+    const patente = document.getElementById("turnoPatente")?.value.trim() || "";
+    const fecha = document.getElementById("turnoFecha")?.value || "";
+    const hora = document.getElementById("turnoHora")?.value || "";
+    const servicio = document.getElementById("turnoTipoServicio")?.value || "";
+    const motivo = document.getElementById("turnoMotivo")?.value.trim() || "";
+
+    if (!nombre || !telefono || !vehiculo || !fecha || !hora || !servicio) {
+        alert("Completá nombre, teléfono, vehículo, fecha, horario y tipo de servicio.");
+        return;
+    }
+
+    const { data: codigo, error } = await window.supabaseClient.rpc(
+        "solicitar_turno",
+        {
+            p_nombre: nombre,
+            p_telefono: telefono,
+            p_vehiculo: vehiculo,
+            p_patente: patente,
+            p_fecha: fecha,
+            p_hora: hora,
+            p_servicio: servicio,
+            p_motivo: motivo
+        }
+    );
+
+    if (error) {
+        console.error("Error al guardar turno:", error);
+        alert("No se pudo guardar el turno. Revisá los permisos de Supabase.");
+        return;
+    }
+
+    alert(`Turno guardado correctamente. Código: ${codigo}`);
+    await mostrarTurnos();
+}
 ```

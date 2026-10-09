@@ -1,17 +1,17 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#111827">
-
-    <title>Panel Administrativo | PAG</title>
 
     <link rel="stylesheet" href="estilos.css">
+
+    <title>Panel Administrativo | PAG</title>
 </head>
 
 <body>
+
     <header>
         <div class="logo">
             <h1>PAG</h1>
@@ -21,47 +21,149 @@
         <nav>
             <a href="index.html">Inicio</a>
             <a href="seguimiento.html">Seguimiento</a>
+
+            <button
+                type="button"
+                id="logoutBtn"
+                onclick="cerrarSesion()"
+                style="display:none;"
+            >
+                Cerrar sesión
+            </button>
         </nav>
     </header>
 
-    <main>
-        <section class="admin-page">
-            <div class="admin-box">
-                <div class="admin-logo">PAG</div>
+    <!-- INICIO DE SESIÓN -->
+    <section
+        id="loginPage"
+        style="max-width:500px; margin:50px auto; padding:20px;"
+    >
 
-                <h2>Panel de administración</h2>
+        <div
+            class="login-box"
+            style="background:white; padding:30px; border-radius:12px;"
+        >
 
-                <p class="admin-description">
-                    Desde este panel podrás administrar las órdenes de trabajo
-                    y los turnos de Precision Automotriz Group.
-                </p>
+            <div class="admin-logo">PAG</div>
 
-                <div class="admin-menu">
-                    <button type="button" class="admin-button"
-                        onclick="mostrarNuevaOrden()">
-                        ➕ Nueva orden
-                    </button>
+            <h2>Acceso administrativo</h2>
 
-                    <button type="button" class="admin-button"
-                        onclick="mostrarOrdenes()">
-                        📋 Ver órdenes
-                    </button>
+            <p>
+                Ingresá con tu usuario administrador para gestionar
+                los turnos y las órdenes del taller.
+            </p>
 
-                    <button type="button" class="admin-button"
-                        onclick="mostrarTurnos()">
-                        📅 Ver turnos
-                    </button>
+            <form onsubmit="iniciarSesion(event)">
 
-                    <button type="button" class="admin-button"
-                        onclick="mostrarEditarOrden()">
-                        ✏️ Editar orden existente
-                    </button>
-                </div>
+                <label for="loginEmail">Correo electrónico</label>
 
-                <p id="adminMensaje" role="status" aria-live="polite"></p>
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Ingresá tu correo"
+                    autocomplete="username"
+                    required
+                    style="width:100%; box-sizing:border-box; margin:10px 0 20px; padding:12px;"
+                >
+
+                <label for="loginPassword">Contraseña</label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Ingresá tu contraseña"
+                    autocomplete="current-password"
+                    required
+                    style="width:100%; box-sizing:border-box; margin:10px 0 20px; padding:12px;"
+                >
+
+                <button
+                    type="submit"
+                    class="admin-button"
+                    style="width:100%;"
+                >
+                    🔐 Ingresar al panel
+                </button>
+
+            </form>
+
+            <p
+                id="loginMensaje"
+                role="status"
+                style="margin-top:15px;"
+            ></p>
+
+        </div>
+
+    </section>
+
+    <!-- PANEL ADMINISTRATIVO -->
+    <section
+        class="admin-page"
+        id="adminPage"
+        style="display:none;"
+    >
+
+        <div class="admin-box">
+
+            <div class="admin-logo">
+                PAG
             </div>
-        </section>
-    </main>
+
+            <h2>Panel de administración</h2>
+
+            <p class="admin-description">
+                Desde este panel podrás administrar las órdenes,
+                los turnos y la información de los vehículos del taller.
+            </p>
+
+            <div class="admin-menu">
+
+                <button
+                    class="admin-button"
+                    onclick="mostrarNuevaOrden()"
+                >
+                    ➕ Nueva orden
+                </button>
+
+                <button
+                    class="admin-button"
+                    onclick="mostrarOrdenes()"
+                >
+                    📋 Ver órdenes
+                </button>
+
+                <button
+                    class="admin-button"
+                    onclick="mostrarTurnos()"
+                >
+                    📅 Ver turnos
+                </button>
+
+                <button class="admin-button">
+                    🚗 Vehículos
+                </button>
+
+                <button
+                    class="admin-button"
+                    onclick="mostrarEditarOrden()"
+                >
+                    ✏️ Editar orden existente
+                </button>
+
+                <button class="admin-button">
+                    📋 Órdenes de trabajo
+                </button>
+
+                <button class="admin-button">
+                    📸 Fotos
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
 
     <footer>
         <p>PAG — Precision Automotriz Group</p>
@@ -69,11 +171,86 @@
         <p>© 2026 - Todos los derechos reservados</p>
     </footer>
 
-    <!-- Cargar Supabase antes del archivo administrativo -->
+    <!-- CONEXIÓN CON SUPABASE -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Funciones del panel administrativo -->
+    <script>
+        window.supabaseClient = window.supabase.createClient(
+            "https://wzekdvkwdivzuujnvcnj.supabase.co",
+            "sb_publishable_5y6uaC69wKM0WlNYRSfPyQ_RpeCSKJh"
+        );
+
+        function mostrarPanelAutorizado() {
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("adminPage").style.display = "";
+            document.getElementById("logoutBtn").style.display = "inline-block";
+        }
+
+        function mostrarInicioSesion() {
+            document.getElementById("loginPage").style.display = "block";
+            document.getElementById("adminPage").style.display = "none";
+            document.getElementById("logoutBtn").style.display = "none";
+        }
+
+        async function iniciarSesion(event) {
+            event.preventDefault();
+
+            const mensaje = document.getElementById("loginMensaje");
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value;
+
+            mensaje.textContent = "Verificando acceso...";
+
+            const { data, error } = await window.supabaseClient.auth
+                .signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+            if (error) {
+                console.error("Error de inicio de sesión:", error);
+                mensaje.textContent =
+                    "No se pudo ingresar. Revisá el correo y la contraseña.";
+                return;
+            }
+
+            mostrarPanelAutorizado();
+            mensaje.textContent = "";
+        }
+
+        async function cerrarSesion() {
+            const { error } = await window.supabaseClient.auth.signOut();
+
+            if (error) {
+                console.error("Error al cerrar sesión:", error);
+                alert("No se pudo cerrar la sesión.");
+                return;
+            }
+
+            mostrarInicioSesion();
+        }
+
+        async function verificarSesion() {
+            const { data, error } = await window.supabaseClient.auth.getSession();
+
+            if (error) {
+                console.error("Error al verificar la sesión:", error);
+                mostrarInicioSesion();
+                return;
+            }
+
+            if (data.session) {
+                mostrarPanelAutorizado();
+            } else {
+                mostrarInicioSesion();
+            }
+        }
+
+        verificarSesion();
+    </script>
+
+    <!-- FUNCIONES DEL SISTEMA DEL TALLER -->
     <script src="admin.js"></script>
+
 </body>
 </html>
-```

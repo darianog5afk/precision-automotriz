@@ -679,498 +679,241 @@ function filtrarOrdenes() {
 
  
 // ==========================================
-// VER TURNOS
+// VER TURNOS - SUPABASE
 // ==========================================
 
-function mostrarTurnos() {
+let turnosAdmin = [];
 
+async function mostrarTurnos() {
     const adminBox = document.querySelector(".admin-box");
 
-    const turnos =
-        JSON.parse(localStorage.getItem("turnosPAG")) || [];
-        turnos.sort((a, b) => {
+    adminBox.innerHTML = `
+        <div class="admin-logo">PAG</div>
+        <h2>📅 Turnos del taller</h2>
+        <p class="admin-description">
+            Administración de turnos de Precision Automotriz Group.
+        </p>
+        <div id="listaTurnos">Cargando turnos...</div>
+        <button class="admin-button" onclick="location.reload()">
+            ← Volver al panel
+        </button>
+    `;
 
-    const fechaA = new Date(`${a.fecha}T${a.hora}`);
-    const fechaB = new Date(`${b.fecha}T${b.hora}`);
+    const { data, error } = await window.supabaseClient
+        .from("Turnos")
+        .select("*")
+        .order("fecha", { ascending: true })
+        .order("hora", { ascending: true });
 
-    // Los cancelados van al final
-    if (a.estado === "Cancelado" && b.estado !== "Cancelado") {
-        return 1;
-    }
+    if (error) {
+        console.error("Error al cargar turnos:", error);
 
-    if (a.estado !== "Cancelado" && b.estado === "Cancelado") {
-        return -1;
-    }
-
-    return fechaA - fechaB;
-});
-
-    let listaTurnos = "";
-
-    if (turnos.length === 0) {
-
-        listaTurnos = `
-            <p class="admin-description">
-                📭 Todavía no hay turnos registrados.
-            </p>
+        document.getElementById("listaTurnos").innerHTML = `
+            <p>No se pudieron cargar los turnos.
+            Revisá tu sesión y los permisos de Supabase.</p>
         `;
+        return;
+    }
 
-    } else {
+    turnosAdmin = data || [];
+    dibujarTurnos();
+}
 
-        turnos.forEach((turno) => {
+function dibujarTurnos() {
+    const contenedor = document.getElementById("listaTurnos");
 
-            listaTurnos += `
+    if (!contenedor) return;
 
-                <div class="orden-admin">
+    const buscar = (
+        document.getElementById("buscarTurno")?.value || ""
+    ).toLowerCase().trim();
 
-                    <h3>
-    📅 ${turno.fecha.split("-").reverse().join("/")} — ${turno.hora}
-</h3>
+    const turnos = [...turnosAdmin]
+        .filter(t =>
+            [
+                t.codigo,
+                t.nombre,
+                t.telefono,
+                t.vehiculo,
+                t.patente,
+                t.servicio,
+                t.estado
+            ].some(v =>
+                String(v || "").toLowerCase().includes(buscar)
+            )
+        )
+        .sort((a, b) => {
+            if (a.estado === "Cancelado" && b.estado !== "Cancelado") {
+                return 1;
+            }
 
-                    <p>
-                        <strong>Cliente:</strong>
-                        ${turno.cliente}
-                    </p>
+            if (a.estado !== "Cancelado" && b.estado === "Cancelado") {
+                return -1;
+            }
 
-                    <p>
-                        <strong>Teléfono:</strong>
-                        ${turno.telefono}
-                    </p>
-
-                    <p>
-                        <strong>Vehículo:</strong>
-                        ${turno.vehiculo}
-                    </p>
-
-                    <p>
-                        <strong>Patente:</strong>
-                        ${turno.patente}
-                    </p>
-                    <p>
-    <strong>Tipo de servicio:</strong>
-    ${turno.tipoServicio || "No especificado"}
-</p>
-
-                    <p>
-                        <strong>Motivo:</strong>
-                        ${turno.motivo}
-                    </p>
-
-                    <p>
-    <strong>Estado:</strong>
-
-    <span class="estado-turno ${
-    turno.estado === "Pendiente"
-    ? "estado-pendiente"
-    : turno.estado === "Confirmado"
-    ? "estado-confirmado"
-    : turno.estado === "Atendido"
-    ? "estado-atendido"
-    : "estado-cancelado"
-    }">
-        ${turno.estado}
-    </span>
-</p>
-                    <button
-    class="admin-button"
-    onclick="confirmarTurno(${turno.id})"
->
-    ✅ Confirmar turno
-</button>
-<button
-    class="admin-button"
-    onclick="atenderTurno(${turno.id})"
->
-    🔧 Marcar como atendido
-</button>
-<button
-    class="admin-button"
-    onclick="cancelarTurno(${turno.id})"
->
-    ❌ Cancelar turno
-</button>
-<button
-    class="admin-button"
-    onclick="eliminarTurno(${turno.id})"
->
-    🗑️ Eliminar turno
-</button>
-
-                </div>
-
-            `;
-
+            return new Date(`${a.fecha}T${a.hora}`) -
+                   new Date(`${b.fecha}T${b.hora}`);
         });
 
+    if (turnos.length === 0) {
+        contenedor.innerHTML = `
+            <p class="admin-description">
+                📭 No hay turnos para mostrar.
+            </p>
+        `;
+        return;
     }
 
-    adminBox.innerHTML = `
-
-        <div class="admin-logo">
-            PAG
-        </div>
-
-        <h2>📅 Turnos del taller</h2>
-
-        <p class="admin-description">
-            Desde acá podés registrar y consultar los turnos de los clientes.
-        </p>
-
+    contenedor.innerHTML = turnos.map(t => `
         <div class="orden-admin">
 
-            <h3>➕ Nuevo turno</h3>
+            <h3>
+                📅 ${t.fecha
+                    ? t.fecha.split("-").reverse().join("/")
+                    : ""} — ${t.hora || ""}
+            </h3>
 
-            <label>Nombre y apellido</label>
-            <input
-                type="text"
-                id="turnoCliente"
-                placeholder="Ej: Juan Pérez"
-            >
+            <p>
+                <strong>Código de solicitud:</strong>
+                ${t.codigo || "Sin código"}
+            </p>
 
-            <label>Teléfono</label>
-            <input
-                type="text"
-                id="turnoTelefono"
-                placeholder="Ej: 11 1234-5678"
-            >
+            <p><strong>Cliente:</strong> ${t.nombre || "-"}</p>
+            <p><strong>Teléfono:</strong> ${t.telefono || "-"}</p>
+            <p><strong>Vehículo:</strong> ${t.vehiculo || "-"}</p>
+            <p><strong>Patente:</strong> ${t.patente || "-"}</p>
+            <p><strong>Tipo de servicio:</strong> ${t.servicio || "No especificado"}</p>
+            <p><strong>Motivo:</strong> ${t.motivo || "-"}</p>
+            <p><strong>Estado:</strong> ${t.estado || "Pendiente"}</p>
 
-            <label>Vehículo</label>
-            <input
-                type="text"
-                id="turnoVehiculo"
-                placeholder="Ej: Volkswagen Virtus"
-            >
+            <button class="admin-button"
+                onclick="confirmarTurno(${t.id})">
+                ✅ Confirmar turno
+            </button>
 
-            <label>Patente</label>
-            <input
-                type="text"
-                id="turnoPatente"
-                placeholder="Ej: AB 123 CD"
-            >
+            <button class="admin-button"
+                onclick="atenderTurno(${t.id})">
+                🔧 Marcar como atendido
+            </button>
 
-            <label>Fecha</label>
-            <input
-                type="date"
-                id="turnoFecha"
-            >
+            <button class="admin-button"
+                onclick="cancelarTurno(${t.id})">
+                ❌ Cancelar turno
+            </button>
 
-            <label>Horario</label>
-            <input
-                type="time"
-                id="turnoHora"
-            >
-            <label>Tipo de servicio</label>
-
-<select id="turnoTipoServicio">
-
-    <option value="">
-        Seleccioná un servicio
-    </option>
-
-    <option value="Mantenimiento general">
-        🔧 Mantenimiento general
-    </option>
-
-    <option value="Frenos y suspensión">
-        🚗 Frenos y suspensión
-    </option>
-
-    <option value="Embrague y transmisión">
-        ⚙️ Embrague y transmisión
-    </option>
-
-    <option value="Electricidad">
-        🔌 Electricidad
-    </option>
-
-    <option value="Diagnóstico">
-        🔍 Diagnóstico
-    </option>
-
-    <option value="Distribución">
-        🛠️ Distribución
-    </option>
-
-    <option value="Otro">
-        📋 Otro
-    </option>
-
-</select>
-
-            <label>Motivo de la consulta</label>
-            <textarea
-                id="turnoMotivo"
-                placeholder="Ej: Cambio de aceite y revisión general"
-            ></textarea>
-
-            <button
-                class="admin-button"
-                onclick="guardarTurno()"
-            >
-                💾 Guardar turno
+            <button class="admin-button"
+                onclick="eliminarTurno(${t.id})">
+                🗑️ Eliminar turno
             </button>
 
         </div>
-
-        <h2>📋 Turnos registrados</h2>
-
-<input
-    type="text"
-    id="buscarTurno"
-    placeholder="🔎 Buscar cliente, patente, vehículo o teléfono"
-    oninput="filtrarTurnos()"
->
-
-<div id="listaTurnos">
-    ${listaTurnos}
-</div>
-
-        <button
-            class="admin-button"
-            onclick="location.reload()"
-        >
-            ← Volver al panel
-        </button>
-
-    `;
+    `).join("");
 }
-function guardarTurno() {
 
-    const cliente = document.getElementById("turnoCliente").value.trim();
+// ==========================================
+// CAMBIAR ESTADO DEL TURNO
+// ==========================================
+
+async function confirmarTurno(id) {
+    await cambiarEstadoTurno(id, "Confirmado");
+}
+
+async function atenderTurno(id) {
+    await cambiarEstadoTurno(id, "Atendido");
+}
+
+async function cancelarTurno(id) {
+    await cambiarEstadoTurno(id, "Cancelado");
+}
+
+async function cambiarEstadoTurno(id, estado) {
+    const { error } = await window.supabaseClient
+        .from("Turnos")
+        .update({ estado })
+        .eq("id", id);
+
+    if (error) {
+        console.error("Error al actualizar turno:", error);
+        alert("No se pudo actualizar el turno. Revisá los permisos de Supabase.");
+        return;
+    }
+
+    alert("Turno actualizado correctamente.");
+    await mostrarTurnos();
+}
+
+// ==========================================
+// ELIMINAR TURNO
+// ==========================================
+
+async function eliminarTurno(id) {
+    if (!confirm("¿Querés eliminar este turno definitivamente?")) {
+        return;
+    }
+
+    const { error } = await window.supabaseClient
+        .from("Turnos")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        console.error("Error al eliminar turno:", error);
+        alert("No se pudo eliminar el turno. Revisá los permisos de Supabase.");
+        return;
+    }
+
+    alert("Turno eliminado correctamente.");
+    await mostrarTurnos();
+}
+
+// ==========================================
+// BUSCAR TURNOS
+// ==========================================
+
+function filtrarTurnos() {
+    dibujarTurnos();
+}
+
+// ==========================================
+// GUARDAR TURNO DESDE ADMINISTRACIÓN
+// ==========================================
+
+async function guardarTurno() {
+    const nombre = document.getElementById("turnoCliente").value.trim();
     const telefono = document.getElementById("turnoTelefono").value.trim();
     const vehiculo = document.getElementById("turnoVehiculo").value.trim();
     const patente = document.getElementById("turnoPatente").value.trim();
     const fecha = document.getElementById("turnoFecha").value;
     const hora = document.getElementById("turnoHora").value;
+    const servicio = document.getElementById("turnoTipoServicio").value;
     const motivo = document.getElementById("turnoMotivo").value.trim();
-    const tipoServicio = document.getElementById("turnoTipoServicio").value;
-    
 
-    if (
-        cliente === "" ||
-        telefono === "" ||
-        vehiculo === "" ||
-        patente === "" ||
-        fecha === "" ||
-        hora === "" ||
-        motivo === ""
-    ) {
-        alert("Por favor completá todos los campos.");
+    if (!nombre || !telefono || !vehiculo ||
+        !fecha || !hora || !servicio) {
+        alert("Completá nombre, teléfono, vehículo, fecha, horario y tipo de servicio.");
         return;
     }
 
-    const turnos =
-        JSON.parse(localStorage.getItem("turnosPAG")) || [];
-
-    const nuevoTurno = {
-
-        id: Date.now(),
-
-        cliente: cliente,
-        telefono: telefono,
-        vehiculo: vehiculo,
-        patente: patente,
-        fecha: fecha,
-        hora: hora,
-        motivo: motivo,
-        tipoServicio: tipoServicio,
-
-        estado: "Pendiente"
-    };
-
-    turnos.push(nuevoTurno);
-
-    localStorage.setItem(
-        "turnosPAG",
-        JSON.stringify(turnos)
+    const { data: codigo, error } = await window.supabaseClient.rpc(
+        "solicitar_turno",
+        {
+            p_nombre: nombre,
+            p_telefono: telefono,
+            p_vehiculo: vehiculo,
+            p_patente: patente,
+            p_fecha: fecha,
+            p_hora: hora,
+            p_servicio: servicio,
+            p_motivo: motivo
+        }
     );
 
-    alert("✅ Turno guardado correctamente.");
-
-    mostrarTurnos();
-}
-function confirmarTurno(id) {
-
-    const turnos =
-        JSON.parse(localStorage.getItem("turnosPAG")) || [];
-
-    const turno = turnos.find(t => t.id === id);
-
-    if (!turno) {
-        alert("No se encontró el turno.");
+    if (error) {
+        console.error("Error al guardar turno:", error);
+        alert("No se pudo guardar el turno. Revisá los permisos de Supabase.");
         return;
     }
 
-    turno.estado = "Confirmado";
-
-    localStorage.setItem(
-        "turnosPAG",
-        JSON.stringify(turnos)
-    );
-
-    alert("✅ Turno confirmado correctamente.");
-
-    mostrarTurnos();
-}
-function cancelarTurno(id) {
-
-    const turnos =
-        JSON.parse(localStorage.getItem("turnosPAG")) || [];
-
-    const turno = turnos.find(t => t.id === id);
-
-    if (!turno) {
-        alert("No se encontró el turno.");
-        return;
-    }
-
-    turno.estado = "Cancelado";
-
-    localStorage.setItem(
-        "turnosPAG",
-        JSON.stringify(turnos)
-    );
-
-    alert("❌ Turno cancelado.");
-
-    mostrarTurnos();
-}
-function eliminarTurno(id) {
-
-    const confirmar = confirm(
-        "¿Seguro que querés eliminar este turno?"
-    );
-
-    if (!confirmar) {
-        return;
-    }
-
-    const turnos =
-        JSON.parse(localStorage.getItem("turnosPAG")) || [];
-
-    const nuevosTurnos =
-        turnos.filter(turno => turno.id !== id);
-
-    localStorage.setItem(
-        "turnosPAG",
-        JSON.stringify(nuevosTurnos)
-    );
-
-    alert("🗑️ Turno eliminado correctamente.");
-
-    mostrarTurnos();
-}
-function filtrarTurnos() {
-
-    const buscador = document.getElementById("buscarTurno");
-    const lista = document.getElementById("listaTurnos");
-
-    if (!buscador || !lista) {
-        return;
-    }
-
-    const texto = buscador.value.trim().toLowerCase();
-
-    const turnos =
-        JSON.parse(localStorage.getItem("turnosPAG")) || [];
-
-    const resultados = turnos.filter(turno => {
-
-        return (
-            String(turno.cliente || "").toLowerCase().includes(texto) ||
-            String(turno.telefono || "").toLowerCase().includes(texto) ||
-            String(turno.vehiculo || "").toLowerCase().includes(texto) ||
-            String(turno.patente || "").toLowerCase().includes(texto) ||
-            String(turno.tipoServicio || "").toLowerCase().includes(texto)
-        );
-
-    });
-
-    if (resultados.length === 0) {
-
-        lista.innerHTML = `
-            <p class="admin-description">
-                📭 No se encontraron turnos.
-            </p>
-        `;
-
-        return;
-    }
-
-    let contenido = "";
-
-    resultados.forEach(turno => {
-
-        contenido += `
-
-            <div class="orden-admin">
-
-                <h3>
-                    📅 ${turno.fecha.split("-").reverse().join("/")}
-                    — ${turno.hora}
-                </h3>
-
-                <p>
-                    <strong>Cliente:</strong>
-                    ${turno.cliente}
-                </p>
-
-                <p>
-                    <strong>Teléfono:</strong>
-                    ${turno.telefono}
-                </p>
-
-                <p>
-                    <strong>Vehículo:</strong>
-                    ${turno.vehiculo}
-                </p>
-
-                <p>
-                    <strong>Patente:</strong>
-                    ${turno.patente}
-                </p>
-                <p>
-    <strong>Tipo de servicio:</strong>
-    ${turno.tipoServicio || "No especificado"}
-</p>
-
-                <p>
-                    <strong>Motivo:</strong>
-                    ${turno.motivo}
-                </p>
-
-                <p>
-                    <strong>Estado:</strong>
-                    ${turno.estado}
-                </p>
-
-            </div>
-
-        `;
-    });
-
-    lista.innerHTML = contenido;
-}
-function atenderTurno(id) {
-
-    const turnos =
-        JSON.parse(localStorage.getItem("turnosPAG")) || [];
-
-    const turno = turnos.find(t => t.id === id);
-
-    if (!turno) {
-        alert("No se encontró el turno.");
-        return;
-    }
-
-    turno.estado = "Atendido";
-
-    localStorage.setItem(
-        "turnosPAG",
-        JSON.stringify(turnos)
-    );
-
-    alert("🔧 Turno marcado como atendido.");
-
-    mostrarTurnos();
+    alert(`Turno guardado correctamente. Código: ${codigo}`);
+    await mostrarTurnos();
 }

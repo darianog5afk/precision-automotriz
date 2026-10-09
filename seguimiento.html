@@ -1,98 +1,109 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#111827">
-    <meta name="description" content="Consultá el estado de reparación de tu vehículo en Precision Automotriz Group.">
 
     <link rel="stylesheet" href="estilos.css">
 
-    <title>Seguimiento de vehículo | PAG</title>
+    <title>Seguimiento | PAG</title>
 </head>
 
 <body>
 
     <header>
+
         <div class="logo">
             <h1>PAG</h1>
             <p>Precision Automotriz Group</p>
         </div>
 
-        <nav aria-label="Navegación principal">
+        <nav>
             <a href="index.html">Inicio</a>
             <a href="index.html#servicios">Servicios</a>
             <a href="seguimiento.html">Seguimiento</a>
-            <a href="turnos.html">Solicitar turno</a>
             <a href="index.html#contacto">Contacto</a>
         </nav>
+
     </header>
 
-    <main>
-        <section class="tracking-page">
-            <div class="tracking-box">
 
-                <div class="tracking-logo">PAG</div>
+    <section class="tracking-page">
 
-                <h2>Seguimiento de tu vehículo</h2>
+        <div class="tracking-box">
 
-                <p>
-                    Ingresá el código de tu orden de trabajo
-                    para consultar el estado de tu vehículo.
-                </p>
-
-                <form id="formularioSeguimiento">
-                    <label for="codigoOrden">Código de orden</label>
-
-                    <input
-                        type="text"
-                        id="codigoOrden"
-                        name="codigoOrden"
-                        placeholder="Ejemplo: PAG-00125"
-                        autocomplete="off"
-                        maxlength="30"
-                        required
-                    >
-
-                    <button type="submit" class="btn btn-primary" id="botonConsulta">
-                        🔎 Consultar vehículo
-                    </button>
-                </form>
-
-                <div id="resultadoSeguimiento" role="status" aria-live="polite"></div>
-
-                <a href="index.html" class="volver">
-                    ← Volver al inicio
-                </a>
-
+            <div class="tracking-logo">
+                PAG
             </div>
-        </section>
-    </main>
+
+            <h2>Seguimiento de tu vehículo</h2>
+
+            <p>
+                Ingresá el código de tu orden de trabajo
+                para consultar el estado de tu vehículo.
+            </p>
+
+            <input
+                type="text"
+                id="codigoOrden"
+                placeholder="Ejemplo: PAG-00125"
+            >
+
+            <button class="btn btn-primary">
+                Consultar vehículo
+            </button>
+            <p id="prueba-script"></p>
+
+            <a href="index.html" class="volver">
+                ← Volver al inicio
+            </a>
+
+        </div>
+
+    </section>
+
 
     <footer>
+
         <p>PAG — Precision Automotriz Group</p>
+
         <p>Taller Mecánico Integral</p>
+
         <p>© 2026 - Todos los derechos reservados</p>
+
     </footer>
-
-    <script src="script.js"></script>
-
     <script>
-        (() => {
-            const parametros = new URLSearchParams(window.location.search);
-            const ordenURL = parametros.get("orden");
-            const campo = document.getElementById("codigoOrden");
-            const formulario = document.getElementById("formularioSeguimiento");
+    const parametros = new URLSearchParams(window.location.search);
+    const ordenDesdeURL = parametros.get("orden");
 
-            if (ordenURL && campo && formulario) {
-                campo.value = ordenURL;
-                formulario.requestSubmit();
-            }
-        })();
-    </script>
+    if (ordenDesdeURL) {
+        const campoOrden = document.getElementById("codigoOrden");
+
+        if (campoOrden) {
+            campoOrden.value = ordenDesdeURL;
+            boton.click();
+        }
+    }
+</script>
+
+<script src="./script.js"></script>
+<script>
+    const parametrosURL = new URLSearchParams(window.location.search);
+    const ordenURL = parametrosURL.get("orden");
+
+    if (ordenURL) {
+
+        const campo = document.getElementById("codigoOrden");
+        const botonConsulta = document.querySelector(".tracking-box .btn-primary");
+
+        if (campo && botonConsulta) {
+            campo.value = ordenURL;
+            botonConsulta.click();
+        }
+
+    }
+</script>
 
 </body>
 </html>
-```

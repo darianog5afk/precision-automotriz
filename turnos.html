@@ -109,12 +109,7 @@
 
 </select>
 
-<label>Motivo de la consulta</label>
 
-<textarea
-    id="motivo"
-    placeholder="Ej: Cambio de aceite, revisión, frenos..."
-></textarea>
             <label>Motivo de la consulta</label>
 
             <textarea
@@ -139,106 +134,102 @@
         </a>
 
     </section>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://wzekdvkwdivzuujnvcnj.supabase.co";
+const SUPABASE_KEY = "sb_publishable_5y6uaC69wKM0WlNYRSfPyQ_RpeCSKJh";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+</script>
+
 
     <script>
 
-        function solicitarTurno() {
+        async function solicitarTurno() {
 
-            const cliente =
-                document.getElementById("cliente").value.trim();
+    const cliente =
+        document.getElementById("cliente").value.trim();
 
-            const telefono =
-                document.getElementById("telefono").value.trim();
+    const telefono =
+        document.getElementById("telefono").value.trim();
 
-            const vehiculo =
-                document.getElementById("vehiculo").value.trim();
+    const vehiculo =
+        document.getElementById("vehiculo").value.trim();
 
-            const patente =
-                document.getElementById("patente").value.trim();
+    const patente =
+        document.getElementById("patente").value.trim();
 
-            const fecha =
-                document.getElementById("fecha").value;
+    const fecha =
+        document.getElementById("fecha").value;
 
-            const hora =
-                document.getElementById("hora").value;
+    const hora =
+        document.getElementById("hora").value;
 
-            const motivo =
-                document.getElementById("motivo").value.trim();
-const tipoServicio =
-    document.getElementById("tipoServicio").value;
+    const motivo =
+        document.getElementById("motivo").value.trim();
 
-            if (
-                cliente === "" ||
-                telefono === "" ||
-                vehiculo === "" ||
-                patente === "" ||
-                fecha === "" ||
-                hora === "" ||
-               motivo === "" ||
+    const tipoServicio =
+        document.getElementById("tipoServicio").value;
 
-tipoServicio === ""
-            ) {
+    if (
+        cliente === "" ||
+        telefono === "" ||
+        vehiculo === "" ||
+        patente === "" ||
+        fecha === "" ||
+        hora === "" ||
+        motivo === "" ||
+        tipoServicio === ""
+    ) {
 
-                alert("Por favor completá todos los campos.");
+        alert("Por favor completá todos los campos.");
 
-                return;
-            }
+        return;
+    }
 
-
-            const turnos =
-                JSON.parse(
-                    localStorage.getItem("turnosPAG")
-                ) || [];
-
-
-            const nuevoTurno = {
-
-                id: Date.now(),
-
-                cliente: cliente,
-
+    const { error } = await supabaseClient
+        .from("Turnos")
+        .insert([
+            {
+                nombre: cliente,
                 telefono: telefono,
-
                 vehiculo: vehiculo,
-
                 patente: patente,
-
                 fecha: fecha,
-
                 hora: hora,
+                servicio: tipoServicio,
+                estado: "Pendiente",
+                motivo: motivo
+            }
+        ]);
 
-                motivo: motivo,
-                tipoServicio: tipoServicio,
+    if (error) {
 
-                estado: "Pendiente"
+        console.error(error);
 
-            };
+        alert("❌ No se pudo enviar el turno.");
 
+        return;
+    }
 
-            turnos.push(nuevoTurno);
+    alert(
+        "✅ Solicitud enviada correctamente. El taller deberá confirmar el turno."
+    );
 
+    document.getElementById("cliente").value = "";
+    document.getElementById("telefono").value = "";
+    document.getElementById("vehiculo").value = "";
+    document.getElementById("patente").value = "";
+    document.getElementById("fecha").value = "";
+    document.getElementById("hora").value = "";
+    document.getElementById("motivo").value = "";
+    document.getElementById("tipoServicio").value = "";
 
-            localStorage.setItem(
-                "turnosPAG",
-                JSON.stringify(turnos)
-            );
-
-
-            alert(
-                "✅ Solicitud enviada correctamente. El taller deberá confirmar el turno."
-            );
-
-
-            document.getElementById("cliente").value = "";
-            document.getElementById("telefono").value = "";
-            document.getElementById("vehiculo").value = "";
-            document.getElementById("patente").value = "";
-            document.getElementById("fecha").value = "";
-            document.getElementById("hora").value = "";
-            document.getElementById("motivo").value = "";
-            document.getElementById("tipoServicio").value = "";
-
-        }
+}
 
     </script>
 

@@ -862,3 +862,15 @@ footer {
     }
 
 }
+css
+/* Etiquetas del formulario de turnos */
+.tracking label {
+    display: block;
+    color: #111827;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 14px;
+    margin-bottom: 6px;
+}
+
+

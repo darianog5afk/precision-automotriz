@@ -7,14 +7,12 @@
     <link rel="stylesheet" href="estilos.css">
     <title>Seguimiento | PAG</title>
 </head>
-
 <body>
     <header>
         <div class="logo">
             <h1>PAG</h1>
             <p>Precision Automotriz Group</p>
         </div>
-
         <nav>
             <a href="index.html">Inicio</a>
             <a href="index.html#servicios">Servicios</a>
@@ -26,13 +24,8 @@
     <section class="tracking-page">
         <div class="tracking-box">
             <div class="tracking-logo">PAG</div>
-
             <h2>Seguimiento de tu vehículo</h2>
-
-            <p>
-                Ingresá el código de tu orden de trabajo o de tu solicitud
-                de turno para consultar su estado.
-            </p>
+            <p>Ingresá el código de tu orden de trabajo o de tu solicitud de turno para consultar su estado.</p>
 
             <form id="formularioSeguimiento">
                 <input
@@ -42,15 +35,12 @@
                     autocomplete="off"
                     required
                 >
-
                 <button type="submit" class="btn btn-primary" id="botonConsulta">
                     Consultar
                 </button>
             </form>
 
             <div id="resultadoSeguimiento" aria-live="polite"></div>
-            <p id="prueba-script"></p>
-
             <a href="index.html" class="volver">← Volver al inicio</a>
         </div>
     </section>
@@ -60,23 +50,23 @@
         <p>Taller Mecánico Integral</p>
         <p>© 2026 - Todos los derechos reservados</p>
     </footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./script.js"></script>
 
     <script>
-        const parametros = new URLSearchParams(window.location.search);
-        const codigoURL = parametros.get("orden");
+        const parametrosSeguimiento = new URLSearchParams(window.location.search);
+        const codigoSeguimientoURL = parametrosSeguimiento.get("orden");
 
-        if (codigoURL) {
-            const campo = document.getElementById("codigoOrden");
+        if (codigoSeguimientoURL) {
+            const campoSeguimiento = document.getElementById("codigoOrden");
 
-            if (campo) {
-                campo.value = codigoURL;
-                document.getElementById("formularioSeguimiento")
-                    .requestSubmit();
+            if (campoSeguimiento) {
+                campoSeguimiento.value = codigoSeguimientoURL;
+                document.getElementById("formularioSeguimiento").requestSubmit();
             }
         }
     </script>
 </body>
 </html>
-```
+

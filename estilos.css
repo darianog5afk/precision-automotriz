@@ -872,5 +872,14 @@ css
     margin-top: 14px;
     margin-bottom: 6px;
 }
+/* Forzar etiquetas visibles en el formulario de turnos online */
+.tracking .orden-admin label {
+    display: block !important;
+    color: #111827 !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    margin-top: 14px !important;
+    margin-bottom: 6px !important;
+}
 
 
